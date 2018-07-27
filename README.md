@@ -2,6 +2,7 @@
 
 Tietokantasovellus-kurssin harjoitustyönä toteutettava sovellus. 
 
+<a href="http://staffitup.herokuapp.com" target="_blank">Heroku</a>
 [Heroku](http://staffitup.herokuapp.com)
 
 ## Kuvaus
