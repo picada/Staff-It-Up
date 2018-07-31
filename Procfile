@@ -1,1 +1,1 @@
-web: gunicorn --preload --workers 1 staffitup:app
+web: gunicorn --preload --workers 1 application:app
