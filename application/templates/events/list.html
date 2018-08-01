@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Tapahtuma</th>
+      <th>Pvm</th>
+      <th>Täynnä</th>
+    </tr>
+    {% for event in events %}
+    <tr>
+      <td>{{ event.type }}</td>
+      <td>{{ event.date }}</td>
+      <td>{{ event.staffed }}</td>
+      <td>
+	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id) }}">
+	        <input type="submit" value="Merkitse täydeksi"/>
+	      </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

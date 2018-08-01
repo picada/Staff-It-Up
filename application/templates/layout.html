@@ -5,10 +5,14 @@
       <title>Staff It Up!</title>
     </head>
 
-    <body>
+    <body
+    <ul>
+      <li><a href="{{ url_for('events_index') }}">Listaa tapahtumat</a></li>
+      <li><a href="{{ url_for('events_form') }}">Lisää uusi tapahtuma</a></li>
+    </ul>
       {% block body %}
       <p>
-	Tähän tuodaan sisältö muualta.
+	      Content
       </p>
       {% endblock %}
     </body>

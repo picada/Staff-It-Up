@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('events_create') }}">
+  Tapahtuman tyyppi<br>
+  <input type="text" name="type"/><br>
+  Tapahtuman päivämäärä<br>
+  <input type="date" name="date"/><br>
+  Tapahtuman henkilömäärä<br>
+  <input type="number" name="pax"/><br>
+  Muu info (paikka, kesto, muut lisätiedot)<br>
+  <textarea name="info"/></textarea><br>
+  <input type="submit" value="Lisää uusi tapahtuma"/>
+</form>
+{% endblock %}
