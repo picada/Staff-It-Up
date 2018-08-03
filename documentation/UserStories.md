@@ -2,7 +2,7 @@
 
 Alla on kuvattuna sovellukselle olennaisia käyttäjätarinoita.
 
-##Pääkäyttäjänä haluan...
+## Pääkäyttäjänä haluan...
 
 * luoda uusia tapahtumia sekä lisätä jokaiseen tapahtumaan tarvittavat lisätiedot, jotta työntekijöiden on helppo hahmottaa millaisesta tilaisuudesta on kyse
 * muokata jo luotujen tapahtumien tietoja, jos yksityiskohtiin tulee muutoksia
@@ -14,7 +14,7 @@ Alla on kuvattuna sovellukselle olennaisia käyttäjätarinoita.
 * listata erikseen tapahtumat joihin tarvitaan vielä lisää työntekijöitä, jotta voin tarvittaessa huhuilla henkilökuntaa ko. tilaisuuksien osalta
 * lisätä, muokata ja poistaa tapahtuma-, työtehtävä- ja käyttäjätietoja tarvittaessa, jotta tietokanta pysyy ajan tasalla
 
-##Peruskäyttäjänä haluan...
+## Peruskäyttäjänä haluan...
 
 * tarkastella vapaana olevia työtehtäviä selkeässä, aikajärjestyksessä olevassa muodossa
 * ilmoittautua niihin taphatumiin ja työtehtäviin, jotka kulloinkin sopivat omiin aikatauluihin
