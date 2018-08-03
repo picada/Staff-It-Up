@@ -3,6 +3,8 @@
 Tietokantasovellus-kurssin harjoitustyönä toteutettava sovellus. 
 
 [Heroku](http://staffitup.herokuapp.com)
+[Tietokantakaavio](https://github.com/picada/Staff-It-Up/blob/master/documentation/Tsoha%20tietokantakaavio.jpg)
+[User Stories](https://github.com/hajame/warehouse/blob/master/documentation/user_stories.md)
 
 ## Kuvaus
 
