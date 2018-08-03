@@ -6,13 +6,13 @@ Tietokantasovellus-kurssin harjoitustyönä toteutettava sovellus.
 
 ## Kuvaus
 
-Tarkoituksena on luoda keikkatyöalusta tapahtumatoimistolle. Sovelluksessa on kaksi eri käyttäjäroolia, työnantaja ja työntekijä. Sekä toiminnallisuudet että sovellusnäkymä riippuvat käyttäjäroolista, ja työnantajalla on laajemmat oikeudet tietokannan hallintaan.
+Tarkoituksena on luoda keikkatyöalusta tapahtumatoimistolle. Sovelluksessa on eri käyttäjärooleja (alussa ylläpitäjä eli yrityksen työvuoroista vastaava henkilö sekä peruskäyttäjä eli keikkatyöntekijä), ja samalla käyttäjällä voi olla useampi käyttäjärooli. Sekä toiminnallisuudet että sovellusnäkymä riippuvat käyttäjäroolista, ja ylläpitäjällä on laajemmat oikeudet tietokannan hallintaan.
 
-Työnantajapuolella käyttäjä voi mm. lisätä uusia tapahtumia ja niihin liittyviä työvuoroja, vahvistaa työvuoroja ilmoittautumisten perusteella sekä tarkastella eri tapahtumiin varattua henkilökuntaa. Lisäksi sovellus toimii henkilökunnan yhteystietorekisterinä. Myös uusien työnantajakäyttäjien luominen tapahtuu tätä kautta, uutta työnantajatunnusta ei siis voi luoda itse. 
+Ylläpitopuolella käyttäjä voi mm. lisätä uusia tapahtumia ja niihin liittyviä työtehtäviä, vahvistaa työvuoroja ilmoittautumisten perusteella sekä tarkastella eri tapahtumiin varattua henkilökuntaa. Myös uusien työnantajakäyttäjien luominen tapahtuu tätä kautta, uutta ylläpitotunnusta ei siis voi luoda itse. Ylläpidon kautta pystyy lisäämään myös uusia peruskäyttäjiä, ja ylläpitäjät pystyvät muokkaamaan sekä tapahtuma-, työtehtävä- että käyttäjäkohtaisia tietoja. Lisäksi sovellus toimii ylläpitopuolella henkilökunnan yhteystietorekisterinä. 
 
-Kuka tahansa voi puolestaan rekisteröityä sovelluksessa työntekijäksi, ja käyttäjätunnuksen luonnin yhteydessä työntekijä syöttää tietokantaan myös yhteystietonsa. Tunnuksen luomisen jälkeen työntekijä voi tarkastella työnantajan ilmoittamia tapahtumia sekä työvuoroja ja ilmoittautua käytettävissä olevaksi haluamiinsa vuoroihin. Työntekijä voi myös tarkastella omia ilmoittautumisiaan sekä vahvistettuja työvuoroja.
+Kuka tahansa voi puolestaan rekisteröityä sovelluksessa peruskäyttäjäksi eli keikkatyöntekijäksi, ja käyttäjätunnuksen luonnin yhteydessä työntekijä syöttää tietokantaan myös yhteystietonsa. Tunnuksen luomisen jälkeen työntekijä voi tarkastella työnantajan ilmoittamia tapahtumia sekä niihin liittyviä työtehtäviä, ilmoittautua käytettävissä olevaksi haluamiinsa tehtäviin sekä perua jo tehtyjä ilmoittautumisia. Työntekijä voi myös tarkastella omia ilmoittautumisiaan ja vahvistettuja työvuoroja sekä muokata omia yhteystietojaan.
 
-Työvuorot liittyvät aina johonkin tiettyyn tapahtumaan, ja jokaiselle tapahtumalla on päivämäärä, suunta-antavat kellonajat, arvio tapahtuman henkilömäärästä sekä nimi/kuvaus. Jokaista tapahtumaa kohden voi olla saatavilla useampi työvuoro, joiden kesto ja rooli (esim. keikkavastaava / rastiohjaaja / juhla-avustaja) voivat vaihdella. 
+Jokaisella tapahtumalla on nimi/kuvaus, päivämäärä, arvio tapahtuman henkilömäärästä, tieto siitä onko tapahtumaan jo varattu tarpeeksi henkilökuntaa sekä erillinen info-osio, josta voi käydä ilmi esim. tapahtumapaikka ja -aika. Jokaista tapahtumaa kohden voi olla saatavilla useampi työtehtävä, joiden kesto ja rooli (esim. keikkavastaava / rastiohjaaja / juhla-avustaja) voivat vaihdella. Useampi työntekijä voi ilmoittautua saatavilla olevaksi samaan työtehtävään, ja työtehtävien/vuorojen vahvistus tapahtuu ylläpitopuolella. Eri työvuorojen määrää per tapahtuma ei ole ennalta määritelty, vaan ylläpito voi vahvistaa tapahtumaan tarpeelliseksi katsomansa määrän henkilökuntaa.
 
 Sovellus pohjautuu toimintamalliin jota noudatetaan omassa työpaikassani, tällä hetkellä kaikki kuitenkin hoidetaan pääasiassa sähköpostin välityksellä.
 
@@ -22,8 +22,8 @@ Työnantaja:
 * Kirjautuminen
 * Uusien työntekijä- ja työnantajakäyttäjien lisääminen työnantajanäkymästä
 * Käyttäjien poistaminen
-* Uuden tapahtuman luominen
-* Uuden työvuoron luominen
+* Tapahtumien luominen, muokkaaminen ja poistaminen
+* Tapahtumakohtaisten työtehtävien luominen, muokkaaminen ja poistaminen
 * Työvuorojen vahvistaminen ilmoittautumisten perusteella
 * Varatun henkilökunnan tarkastelu tapahtumakohtaisesti
 * Yhteystietojen tarkastelu
@@ -33,5 +33,6 @@ Työntekijä:
 * Kirjautuminen
 * Omien tietojen muokkaus
 * Saatavilla olevien työvuorojen haku ja listaus 
-* Ilmoittautuminen tiettyyn työvuoroon
-* Omien ilmoittautumisten ja vahvistettujen työvuorojen listaus
+* Ilmoittautuminen tiettyyn työtehtävään
+* Ilmoittautumisen peruminen
+* Omien ilmoittautumisten ja vahvistettujen työvuorojen listaus ja tarkastelu
