@@ -17,8 +17,9 @@ Alla on kuvattuna sovellukselle olennaisia käyttäjätarinoita.
 ## Peruskäyttäjänä haluan...
 
 * tarkastella vapaana olevia työtehtäviä selkeässä, aikajärjestyksessä olevassa muodossa
-* ilmoittautua niihin taphatumiin ja työtehtäviin, jotka kulloinkin sopivat omiin aikatauluihin
+* ilmoittautua niihin tapahtumiin ja työtehtäviin, jotka kulloinkin sopivat omiin aikatauluihin
 * perua vahvistamattoman ilmoittautumisen, jos aikatauluihini tuleekin yllättäviä muutoksia
 * tarkastella erikseen sekä menneitä että tulevia vavhvistettuja työvuoroja, jotta:  
   - voin tehdä työtunti-ilmoitukset helposti menneiden tapahtumien listan perusteella
   - nähdä, mihin tuleviin tapahtumiin minut on buukattu ja merkata ne kalenteriin
+* muokata tarvittaessa omia yhteystietojani, jotta työnantaja saa minuun tarvittaessa yhteyttä
