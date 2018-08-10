@@ -17,6 +17,11 @@
 	        <input type="submit" value="Merkitse täydeksi"/>
 	      </form>
       </td>
+      <td>
+	      <form method="POST" action="{{ url_for('events_delete', event_id=event.id) }}">
+	        <input type="submit" value="Poista tapahtuma"/>
+	      </form>
+      </td>
     </tr>
     {% endfor %}
   </table>
