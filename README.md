@@ -40,3 +40,8 @@ Työntekijä:
 * Ilmoittautuminen tiettyyn työtehtävään
 * Ilmoittautumisen peruminen
 * Omien ilmoittautumisten ja vahvistettujen työvuorojen listaus ja tarkastelu
+
+### Testitunnukset
+
+Käyttäjätunnus: test
+Salasana: testtest
