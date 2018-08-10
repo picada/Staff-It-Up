@@ -6,6 +6,16 @@
     </head>
 
     <body
+      {% if current_user.is_authenticated %}
+      <p>
+	      Kirjautunut nimellä {{ current_user.name }}
+        <br>
+        <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
+      </p>
+      {% else %}<br>
+      <a href="{{ url_for('auth_login') }}">Kirjaudu</a>
+      {% endif %}
+
     <ul>
       <li><a href="{{ url_for('events_index') }}">Listaa tapahtumat</a></li>
       <li><a href="{{ url_for('events_form') }}">Lisää uusi tapahtuma</a></li>
