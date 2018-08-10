@@ -7,6 +7,7 @@ from application.events.forms import EventForm
 import datetime
 
 @app.route("/events", methods=["GET"])
+@login_required
 def events_index():
     return render_template("events/list.html", events = Event.query.all())
 
@@ -24,6 +25,11 @@ def events_set_staffed(event_id):
     db.session().commit()
 
     return redirect(url_for("events_index"))
+
+@app.route("/events/<event_id>/details", methods=["GET"])
+@login_required
+def event_details(event_id):
+    return render_template("events/event.html", event=Event.query.get(event_id))
 
 @app.route("/events/delete/<event_id>/", methods=["POST"])
 @login_required

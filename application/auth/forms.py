@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField
+from wtforms import PasswordField, StringField, validators
 from wtforms.fields.html5 import EmailField
 
 class LoginForm(FlaskForm):
@@ -10,11 +10,11 @@ class LoginForm(FlaskForm):
         csrf = False
 
 class NewUserForm(FlaskForm):
-    name = StringField("Etu- ja sukunimi")
-    username = StringField("Käyttäjätunnus")
-    password = PasswordField("Salasana")
-    email = EmailField("Sähköpostiosoite")
-    phone = StringField("Puhelinnumero")
+    name = StringField("Etu- ja sukunimi", [validators.Length(min=4, message="Nimen tulee olla vähintään 4 merkkiä pitkä")])
+    username = StringField("Käyttäjätunnus", [validators.Length(min=4, message="Käyttäjätunnuksen tulee olla vähintään 4 merkkiä pitkä")])
+    password = PasswordField("Salasana", [validators.Length(min=6, message="Salasanan tulee olla vähintään 6 merkkiä pitkä")])
+    email = EmailField("Sähköpostiosoite", [validators.Email(message="Syötä sähköpostiosoite oikeassa muodossa (tunnus@domain.fi)")])
+    phone = StringField("Puhelinnumero", [validators.Length(min=6, message="Puhelinnumeron tulee olla vähintään 6 merkkiä pitkä")])
 
     class Meta:
         csrf = False

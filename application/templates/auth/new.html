@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+{{ error }}
 <form method="POST" action="{{ url_for('user_create') }}">
   <table>
     <tr>
@@ -16,7 +17,7 @@
 	        <li>{{ error }}</li>
 	        {% endfor %}
 	      </ul>
-	  </td>
+	    </td>
     </tr>
     <tr>
       <td>
@@ -26,6 +27,13 @@
         {{ form.username }}
       </td>
       </tr>
+      <td>
+	      <ul>
+	        {% for error in form.username.errors %}
+	        <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+	    </td>
     <tr>
       <td>
         {{ form.password.label }}
@@ -48,6 +56,13 @@
       <td>
         {{ form.email }}
       </td>
+      <td>
+	      <ul>
+	        {% for error in form.email.errors %}
+	        <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+	    </td>
     </tr>
     <tr>
       <td>
@@ -56,7 +71,14 @@
       <td>
         {{ form.phone }}
       </td>
-      </tr>
+    </tr>
+    <td>
+      <ul>
+        {% for error in form.phone.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </td>
     <tr>
       <tr>
      <td colspan="2">

@@ -19,7 +19,6 @@ def auth_login():
         return render_template("auth/loginform.html", form = form,
                                error = "No such username or password")
 
-
     print("Käyttäjä " + user.name + " tunnistettiin")
 
     login_user(user)
@@ -35,6 +34,11 @@ def user_create():
 
     if not form.validate():
         return render_template("auth/new.html", form = form)
+
+    user = User.query.filter_by(username=form.username.data).first()
+    if user is not None:
+        return render_template("auth/new.html", form = form,
+                               error = "Käyttäjänimi on jo varattu")
 
     u = User(form.name.data, form.username.data, form.password.data, form.email.data, form.phone.data)
     print(u)

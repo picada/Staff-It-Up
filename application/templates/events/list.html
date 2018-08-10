@@ -9,7 +9,9 @@
     </tr>
     {% for event in events %}
     <tr>
-      <td>{{ event.type }}</td>
+      <td>
+        <a href="{{ url_for('event_details', event_id=event.id) }}">{{ event.type }}</a>
+      </td>
       <td>{{ event.date }}</td>
       <td>{{ event.staffed }}</td>
       <td>

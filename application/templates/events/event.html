@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h2>{{ event.type }} {{ event.date }}</h2>
+
+  <table>
+    <tr>
+      <td>Nimi / Tyyppi: </td>
+      <td>{{ event.type }}</td>
+    </tr>
+    <tr>
+      <td>Päivämäärä: </td>
+      <td>{{ event.date }}</td>
+    </tr>
+    <tr>
+      <td>Pax: </td>
+      <td>{{ event.pax }}</td>
+    </tr>
+    <tr>
+      <td>Info: </td>
+      <td>{{ event.info }}</td>
+    </tr>
+    <tr>
+      <td>Täynnä: </td>
+      {% if event.staffed  %}
+      <td>Kyllä</td>
+      {% else %}
+      <td>Ei</td>
+      {% endif %}
+    </tr>
+  </table>
+{% endblock %}

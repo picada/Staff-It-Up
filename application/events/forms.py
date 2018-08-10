@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, TextAreaField, Form, validators
 from wtforms.fields.html5 import DateField
-"Nimen tulee olla vähintään 2 merkkiä pitkä"
+
 class EventForm(FlaskForm):
     type = StringField("Tapahtuman tyyppi / nimi", [validators.Length(min=2, message="Nimen tulee olla vähintään 2 merkkiä pitkä")])
     date = DateField("Tapahtuman päivämäärä")
