@@ -25,7 +25,7 @@ class Event(db.Model):
     def find_unstaffed_upcoming_events():
         stmt = text("SELECT event.type, event.date FROM event "
                     "WHERE event.staffed = '0' "
-                    "GROUP BY event.type")
+                    "GROUP BY event.type, event.date")
 
         res = db.engine.execute(stmt)
 
