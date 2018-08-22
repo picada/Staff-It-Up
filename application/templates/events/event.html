@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h2>{{ event.type }} {{ event.date }}</h2>
+<h2>{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</h2>
 
   <table>
     <tr>
@@ -11,7 +11,7 @@
     </tr>
     <tr>
       <td>Päivämäärä: </td>
-      <td>{{ event.date }}</td>
+      <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
     </tr>
     <tr>
       <td>Pax: </td>
@@ -30,4 +30,84 @@
       {% endif %}
     </tr>
   </table>
+  <br><br>
+
+  <h4>Tapahtumaan liittyvät työtehtävät</h4>
+
+  <table>
+    <tr>
+      <th>Rooli</th>
+      <th>Alkaa</th>
+      <th>Päättyy</th>
+    </tr>
+    {% for assignment in assignments %}
+    <tr>
+      <td> {{ assignment.role }}</a>
+      </td>
+      <td>{{ assignment.starttime.strftime("%H:%M") }}</td>
+      <td>{{ assignment.endtime.strftime("%H:%M") }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+
+  <br><br>
+  <h4>Lisää uusi työtehtävä</h4>
+
+  <form method="POST" action="{{ url_for('assignment_create', event_id=event.id) }}">
+    <table>
+      <tr>
+        <td>
+          {{ form.role.label }}
+        </td>
+        <td>
+          {{ form.role }}
+        </td>
+        <td>
+  	      <ul>
+  	        {% for error in form.role.errors %}
+  	        <li>{{ error }}</li>
+  	        {% endfor %}
+  	      </ul>
+  	    </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.starttime.label }}
+        </td>
+        <td>
+          {{ form.starttime }}
+        </td>
+        <td>
+  	      <ul>
+  	        {% for error in form.starttime.errors %}
+  	        <li>{{ error }}</li>
+  	        {% endfor %}
+  	      </ul>
+  	    </td>
+      </tr>
+      <tr>
+        <td>
+          {{ form.endtime.label }}
+        </td>
+        <td>
+          {{ form.endtime }}
+        </td>
+        <td>
+          <ul>
+            {% for error in form.endtime.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+         <input type="submit" value="Lisää uusi työtehtävä"/>
+         </td>
+       </tr>
+    </table>
+  </form>
+
 {% endblock %}

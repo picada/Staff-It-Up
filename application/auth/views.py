@@ -1,10 +1,13 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, logout_user
+# from flask_user import roles_required
 
 from application import app, db
 from application.auth.models import User
 from application.auth.forms import LoginForm
 from application.auth.forms import NewUserForm
+from application.auth.models import Role
+from application.auth.models import UserRole
 
 
 @app.route("/auth/login", methods = ["GET", "POST"])
@@ -41,10 +44,21 @@ def user_create():
                                error = "Käyttäjänimi on jo varattu")
 
     u = User(form.name.data, form.username.data, form.password.data, form.email.data, form.phone.data)
-    print(u)
 
     db.session().add(u)
     db.session().commit()
+
+    role = Role.query.filter_by(name="user").first()
+    user = User.query.filter_by(username=u.username).first()
+
+    if role is None:
+        db.session.add(Role("user"))
+        db.session.commit()
+        role = Role.query.filter_by(name="user").first()
+
+    user_role = UserRole(user.id, role.id)
+    db.session.add(user_role)
+    db.session.commit()
 
     return redirect(url_for("auth_login"))
 

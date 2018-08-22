@@ -4,6 +4,8 @@ from flask_login import login_required
 
 from application.events.models import Event
 from application.events.forms import EventForm
+from application.assignments.forms import AssignmentForm
+from application.assignments.models import Assignment
 import datetime
 
 @app.route("/events", methods=["GET"])
@@ -21,7 +23,11 @@ def events_form():
 def events_set_staffed(event_id):
 
     e = Event.query.get(event_id)
-    e.staffed = True
+    if e.staffed == False:
+        e.staffed = True
+    else:
+        e.staffed = False
+
     db.session().commit()
 
     return redirect(url_for("events_index"))
@@ -29,7 +35,8 @@ def events_set_staffed(event_id):
 @app.route("/events/<event_id>/details", methods=["GET"])
 @login_required
 def event_details(event_id):
-    return render_template("events/event.html", event=Event.query.get(event_id))
+    event = Event.query.get(event_id)
+    return render_template("events/event.html", event=event, form=AssignmentForm(), assignments=event.assignments)
 
 @app.route("/events/delete/<event_id>/", methods=["POST"])
 @login_required

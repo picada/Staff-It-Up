@@ -12,11 +12,15 @@
       <td>
         <a href="{{ url_for('event_details', event_id=event.id) }}">{{ event.type }}</a>
       </td>
-      <td>{{ event.date }}</td>
+      <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
       <td>{{ event.staffed }}</td>
       <td>
 	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id) }}">
-	        <input type="submit" value="Merkitse täydeksi"/>
+          {% if event.staffed == False %}
+          <input type="submit" value="Merkitse täydeksi"/>
+          {% else %}
+          <input type="submit" value="Avaa hakuun"/>
+          {% endif %}
 	      </form>
       </td>
       <td>
@@ -27,4 +31,5 @@
     </tr>
     {% endfor %}
   </table>
+
 {% endblock %}

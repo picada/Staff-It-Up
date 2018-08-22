@@ -1,7 +1,23 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h5>Tervetuloa!</h5>
+{% if needs_staff is defined and needs_staff %}
 <p>
-  Tervetuloa tsoha-työmaalle!
+  Seuraaviin tapahtumiin tarvitaan lisää työntekijöitä:
 </p>
+
+<ul>
+  {% for event in needs_staff %}
+  <li>
+    {{ event.type }} {{ event.date }}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+
+<p>Tällä hetkellä järjestelmässä ei ole yhtään tapahtumaa, joilta puuttuu henkilökuntaa.</p>
+
+{% endif %}
+
 {% endblock %}

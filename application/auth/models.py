@@ -10,10 +10,12 @@ class User(db.Model):
                               onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String(144), nullable=False)
-    username = db.Column(db.String(144), nullable=False)
-    password = db.Column(db.String(144), nullable=False)
+    username = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(144))
-    phone = db.Column(db.String(144))
+    phone = db.Column(db.String(20))
+
+    roles = db.relationship("Role", secondary="account_role")
 
     def __init__(self, name, username, password, email, phone):
         self.name = name
@@ -33,3 +35,22 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+class Role(db.Model):
+
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+    def __init__(self, name):
+        self.name = name
+
+class UserRole(db.Model):
+
+    __tablename__ = "account_role"
+
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
+
+    def __init__(self, user, role):
+        self.account_id = user
+        self.role_id = role
