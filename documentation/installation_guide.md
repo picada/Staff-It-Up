@@ -12,7 +12,7 @@ Python-versioihin.
 
 ### 2. Sovelluksen lataaminen omalle koneelle
 
-Lataa sovellus ZIP-tiedostona osoitteesta [GitHubista](https://github.com/picada/Staff-It-Up) Clone or download -linkin kautta ja pura
+Lataa sovellus ZIP-tiedostona [GitHubista](https://github.com/picada/Staff-It-Up) Clone or download -linkin kautta ja pura
 tiedosto haluamaasi kansioon.
 
 Voit myös kloonata projektin valitsemaasi kansioon suoraan terminaalin kautta
