@@ -3,32 +3,7 @@
 {% block body %}
 <h5>Tervetuloa!</h5>
 
-{% if current_user.is_authenticated and current_user.current_role == "user" %}
-<p>Blblbl</p>
-{% elif current_user.is_authenticated and current_user.current_role == "admin" %}
-{% if needs_staff is defined and needs_staff %}
-<p>
-  Seuraaviin tapahtumiin tarvitaan lisää työntekijöitä:
-</p>
-
-<ul>
-  {% for event in needs_staff %}
-  <li>
-    {{ event.type }} {{ event.date }}
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-
-<p>Tällä hetkellä järjestelmässä ei ole yhtään tapahtumaa, joilta puuttuu henkilökuntaa.</p>
-
-{% endif %}
-
-{% else %}
-
 <p>Voit kirjautua sisään työntekijätunnuksella, luoda uuden työntekijätunnuksen tai
 kirjautua sisään ylläpitäjänä yllä olevan valikon kautta.</p>
-
-{% endif %}
 
 {% endblock %}

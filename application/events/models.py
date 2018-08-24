@@ -23,14 +23,7 @@ class Event(db.Model):
         return self.date.strftime("%d.%m.%Y")
 
     def find_unstaffed_upcoming_events():
-        stmt = text("SELECT event.type, event.date FROM event "
-                    "WHERE event.staffed = '0' "
-                    "GROUP BY event.type, event.date")
 
-        res = db.engine.execute(stmt)
-
-        response = []
-        for row in res:
-            response.append({"type":row[0], "date":row[1]})
+        response = Event.query.filter(Event.staffed=='0', Event.date > db.func.current_date()).order_by(Event.date).all()
 
         return response

@@ -1,8 +1,7 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
-
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import User
 from application.auth.forms import LoginForm
 from application.auth.forms import NewUserForm
@@ -28,8 +27,9 @@ def auth_login():
                                error = "Tunnuksella ei ole työntekijäoikeuksia")
 
     print("Käyttäjä " + user.name + " tunnistettiin")
+
     login_user(user)
-    return render_template("user/index.html")
+    return redirect(url_for("user_index"))
 
 @app.route("/auth/login/admin", methods = ["GET", "POST"])
 def admin_login():
@@ -50,15 +50,17 @@ def admin_login():
     print("Käyttäjä " + user.name + " tunnistettiin")
 
     login_user(user)
-    return render_template("admin/index.html", needs_staff=Event.find_unstaffed_upcoming_events())
+    return redirect(url_for("admin_index"))
 
 @app.route("/admin/index/")
+@login_required(role="admin")
 def admin_index():
     return render_template("admin/index.html", needs_staff=Event.find_unstaffed_upcoming_events())
 
 @app.route("/user/index/")
+@login_required(role="user")
 def user_index():
-    return render_template("user/index.html")
+    return render_template("user/index.html", needs_staff=Event.find_unstaffed_upcoming_events())
 
 @app.route("/auth/new/")
 def newUser_form():

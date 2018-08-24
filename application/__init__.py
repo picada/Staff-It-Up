@@ -34,7 +34,7 @@ def login_required(role="ANY"):
                 return login_manager.unauthorized()
 
             unauthorized = False
-            
+
 
             if role != "ANY":
                 unauthorized = True
@@ -49,6 +49,8 @@ def login_required(role="ANY"):
 
             if unauthorized:
                 return login_manager.unauthorized()
+
+            login_manager.login_view = "auth_login"
 
             return fn(*args, **kwargs)
         return decorated_view

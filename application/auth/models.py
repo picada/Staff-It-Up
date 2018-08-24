@@ -23,7 +23,6 @@ class User(db.Model):
         self.password = password
         self.email = email
         self.phone = phone
-        self.current_role = "guest"
 
     def get_id(self):
         return self.id
@@ -41,6 +40,7 @@ class User(db.Model):
         for user_role in self.roles:
                     if user_role.name == role:
                         return True
+
 
 class Role(db.Model):
 
