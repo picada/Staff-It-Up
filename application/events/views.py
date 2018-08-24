@@ -18,7 +18,7 @@ def events_index():
 @login_required(role="user")
 def events_userindex():
     events = Event.query.all()
-    return render_template("user/events/list.html", events = Event.query.order_by(Event.date).all())
+    return render_template("user/events/list.html", needs_staff=Event.find_unstaffed_upcoming_events())
 
 @app.route("/admin/events/new/")
 @login_required(role="admin")

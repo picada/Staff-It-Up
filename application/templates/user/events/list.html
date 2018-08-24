@@ -1,23 +1,25 @@
 {% extends "user/layout.html" %}
 
 {% block body %}
-  <table>
-    <tr>
-      <th>Tapahtuma</th>
-      <th>Pvm</th>
-      <th>Täynnä</th>
-    </tr>
-    {% for event in events %}
-      {% if event.assignments %}
-      <tr>
-        <td>
-          <a href="{{ url_for('event_details_user', event_id=event.id) }}">{{ event.type }}</a>
-        </td>
-        <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
-        <td>{{ event.staffed }}</td>
-      </tr>
-      {% endif %}
-    {% endfor %}
-  </table>
+
+{% if needs_staff is defined and needs_staff %}
+<p>
+  Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:
+</p>
+
+<ul>
+  {% for event in needs_staff %}
+  {% if event.assignments %}
+  <li>
+    <a href="{{ url_for('event_details_user', event_id=event.id) }}">{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+{% else %}
+
+<p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
+
+{% endif %}
 
 {% endblock %}
