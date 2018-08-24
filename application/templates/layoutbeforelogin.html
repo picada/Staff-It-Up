@@ -26,12 +26,6 @@
               </li>
             </ul>
           </div>
-          <div class="form-inline mt-2 mt-md-0">
-            {% if current_user.is_authenticated %}
-            <a href="{{ url_for('auth_logout') }}">Kirjautunut nimellä {{ current_user.name }} -- Logout</a>
-            {% endif %}
-          </div>
-        </div>
         </nav>
         <main role="main" class="container">
 

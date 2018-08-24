@@ -8,34 +8,31 @@
 
     <body>
 
+
       <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <a class="navbar-brand" href="{{ url_for('index') }} ">Staff It Up</a>
+	      <a class="navbar-brand" href="{{ url_for('user_index') }} ">Staff It Up</a>
 	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
 	        </button>
 	        <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth_login') }} ">Kirjaudu sisään</a>
+                <a class="nav-link" href="{{ url_for('user_index') }}">Linkki1</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('newUser_form') }} ">Luo uusi käyttäjä</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('admin_login') }} ">Kirjaudu sisään ylläpitäjänä</a>
+                <a class="nav-link" href="{{ url_for('user_index') }}">Linkki2</a>
               </li>
             </ul>
-          </div>
-          <div class="form-inline mt-2 mt-md-0">
-            {% if current_user.is_authenticated %}
-            <a href="{{ url_for('auth_logout') }}">Kirjautunut nimellä {{ current_user.name }} -- Logout</a>
-            {% endif %}
-          </div>
-        </div>
+            <div class="form-inline mt-2 mt-md-0">
+	            {% if current_user.is_authenticated %}
+	            <a href="{{ url_for('auth_logout') }}">Kirjautunut nimellä {{ current_user.name }} -- Logout</a>
+	            {% endif %}
+            </div>
+	        </div>
         </nav>
-        <main role="main" class="container">
 
-	      {% block body %}
+        <main role="main" class="container">
+	        {% block body %}
 	      <p>
 	        Content.
       	</p>
