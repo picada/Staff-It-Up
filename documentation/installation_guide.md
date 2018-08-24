@@ -23,8 +23,10 @@ Voit myös kloonata projektin valitsemaasi kansioon suoraan terminaalin kautta
 
 Varmista, että olet komentorivillä projektin juurikansiossa. Luo ja ota käyttöön Pythonin virtuaaliympäristö:
 
-```$ python3 -m venv venv
-$ source venv/bin/activate```
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
 
 Tämän jälkeen asenna sovelluksen vaatimat riippuuvuudet, jotka on määritelty requirements.txt-tiedostossa:
 
