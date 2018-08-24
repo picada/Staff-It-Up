@@ -8,6 +8,10 @@ Tietokantasovellus-kurssin harjoitustyönä toteutettava sovellus.
 
 [User Stories](https://github.com/picada/Staff-It-Up/blob/master/documentation/UserStories.md)
 
+[Asennusohje](https://github.com/picada/Staff-It-Up/blob/master/documentation/installation_guide.md)
+
+[Käyttöohje](https://github.com/picada/Staff-It-Up/blob/master/documentation/manual.md)
+
 ## Kuvaus
 
 Tarkoituksena on luoda keikkatyöalusta tapahtumatoimistolle. Sovelluksessa on eri käyttäjärooleja (alussa ylläpitäjä eli yrityksen työvuoroista vastaava henkilö sekä peruskäyttäjä eli keikkatyöntekijä), ja samalla käyttäjällä voi olla useampi käyttäjärooli. Sekä toiminnallisuudet että sovellusnäkymä riippuvat käyttäjäroolista, ja ylläpitäjällä on laajemmat oikeudet tietokannan hallintaan.
