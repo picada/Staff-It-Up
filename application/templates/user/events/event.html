@@ -46,6 +46,11 @@
       </td>
       <td>{{ assignment.starttime.strftime("%H:%M") }}</td>
       <td>{{ assignment.endtime.strftime("%H:%M") }}</td>
+      <td>
+	      <form method="GET" action="#">
+	        <input type="submit" value="Ilmoittaudu (toiminto ei vielä käytössä)"/>
+	      </form>
+      </td
     </tr>
     {% endfor %}
   </table>

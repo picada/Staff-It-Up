@@ -57,6 +57,11 @@ def event_details_user(event_id):
 def events_delete(event_id):
 
     e = Event.query.get(event_id)
+    assignments = e.assignments
+    for assignment in assignments:
+        db.session.delete(assignment)
+        db.session().commit()
+
     db.session.delete(e);
     db.session().commit()
 
