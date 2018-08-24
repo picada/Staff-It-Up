@@ -17,7 +17,9 @@ tiedosto haluamaasi kansioon.
 
 Voit myös kloonata projektin valitsemaasi kansioon suoraan terminaalin kautta
 
-```$ git clone git@github.com:picada/Staff-It-Up.git```
+```
+$ git clone git@github.com:picada/Staff-It-Up.git
+```
 
 ### 3. Virtuaaliympäristön luominen ja riippuvuuksien lataaminen
 
@@ -30,7 +32,9 @@ $ source venv/bin/activate
 
 Tämän jälkeen asenna sovelluksen vaatimat riippuuvuudet, jotka on määritelty requirements.txt-tiedostossa:
 
-```$ pip install -r requirements.txt```
+```
+$ pip install -r requirements.txt
+```
 
 ### 4. Ensimmäiset käyttäjät
 
@@ -52,6 +56,70 @@ HUOM! Yllä olevat komennot tulee suorittaa ennen ensimmäisten user-käyttäjie
 
 Sovelluksen käynnistäminen taphatuu komennolla
 
-```$ python3 run.py```
+```
+$ python3 run.py
+```
 
 Käynnistämisen jälkeen voit käyttää sovellusta paikallisesti selaimessa osoitteessa (http://localhost:5000/)
+
+## Sovelluksen siirtäminen Herokuun 
+
+### 1. Käyttäjätunnukset ja Herokun komentorivisovellus
+
+Sovelluksen tulee olla asennettuna paikallisesti ennen Herokuun siirtämistä.
+
+Sovelluksen siirtämiseen Herokuun tarvitset oman Heroku-tunnuksen. Jos sinulla ei ole tunnusta, voit luoda sellaisen [täällä](https://signup.heroku.com/?c=70130000001x9jFAAQ). 
+
+Mikäli koneeltasi ei löydy valmiina Herokun komentorivisovellusta, voit asentaa sen terminaalin kautta
+
+macOS:
+
+```
+$ brew install heroku/brew/heroku
+```
+Linux:
+
+```
+$ sudo snap install heroku --classic
+```
+
+Tämän jälkeen voit kirjautua sisään herokuun:
+
+```
+$ heroku login
+```
+
+### 3. Heroku-projektin luominen ja Herokuun lähettäminen
+
+Varmista, että olet komentorivillä projektin juurikansiossa ja luo uusi Heroku-projekti:
+
+$ heroku create projektin_nimi
+
+Voit valita sovellukselle haluamasi nimen. Nimen tulee olla uniikki, ja sovelluksen osoite tulee olemaan muotoa projektin_nimi.herokuapp.com. Jos nimen jättää pois, luo Heroku projektille automaattisesti satunnaisen nimen.
+
+Lisää vielä paikalliseen versionhallintaan tieto Herokusta ja lähetä projekti Herokuun:
+
+```
+$ git remote add heroku
+$ git add .
+$ git commit -m "heroku launch"
+$ git push heroku master
+```
+
+Projektin tulisi nyt olla käynnissä Herokussa: voit tarkistaa asian siirtymällä osoitteeseen <projektin_nimi>.herokuapp.com.
+
+### 4. PostreSQL-tietokannan käyttöönotto
+
+Luodaan sovellusta varten vielä PostreSQL-tietokanta ja otetaan se käyttöön:
+
+```$ heroku config:set HEROKU=1
+$ heroku addons:add heroku-postgresql:hobby-dev
+```
+
+Paikallisesti asennetun sovelluksen mukana olleet tietokohteet eivät siirry eteenpäin Herokuun, joten tarvittavat käyttäjät ja roolit tulee taas luoda terminaalissa manuaalisesti:
+
+```
+$ heroku pg:psql
+projektin_nimi::DATABASE=> INSERT INTO account (name, username, password) VALUES ('Admin', 'admin', 'admin');
+projektin_nimi::DATABASE=> INSERT INTO role (name) VALUES ('admin');
+projektin_nimi::DATABASE=> INSERT INTO account_role (account_id, role_ide) VALUES (1, 1);
