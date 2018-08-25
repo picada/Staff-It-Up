@@ -27,21 +27,28 @@ def assignment_create(event_id):
 
     return redirect(url_for("event_details", event_id=event_id))
 
-# @app.route("/user/assignments/<int:event_id>", methods=["POST"])
-# @login_required(role="user")
-# def reg_create(assignment_id, event_id):
-#
-#     a = AssignmentRegistration.query.filter_by(account_id=current_user.id, assignment_id=assignment_id).first()
-#
-#     print(a)
-#
-#     if not a:
-#         db.session().add(a)
-#         db.session().commit()
-#
-#     reg = AssignmentRegistration(current_user.id, 3)
-#
-#     db.session().add(reg)
-#     db.session().commit()
-#
-#     return redirect(url_for("event_details_user", event_id=event_id))
+@app.route("/user/assignments/<event_id>/<assignment_id>", methods=["POST"])
+@login_required(role="user")
+def reg_create(assignment_id, event_id):
+
+    a = AssignmentRegistration.query.filter_by(account_id=current_user.id, assignment_id=assignment_id).first()
+
+    if not a:
+
+        reg = AssignmentRegistration(current_user.id, assignment_id)
+
+        db.session().add(reg)
+        db.session().commit()
+
+    return redirect(url_for("event_details_user", event_id=event_id))
+
+@app.route("/user/assignments/<event_id>/<assignment_id>/delete", methods=["POST"])
+@login_required(role="user")
+def reg_delete(assignment_id, event_id):
+
+    r = AssignmentRegistration.query.filter_by(account_id=current_user.id, assignment_id=assignment_id).first()
+
+    db.session.delete(r);
+    db.session().commit()
+
+    return redirect(url_for("event_details_user", event_id=event_id))

@@ -17,6 +17,16 @@ class Assignment(db.Model):
         self.role = role
         self.event_id = event
 
+    def check_reg_existence(self, user, assignment):
+
+        r = AssignmentRegistration.query.filter_by(account_id=user, assignment_id=assignment).first()
+
+        if r:
+            return True
+        else:
+            return False
+
+
 class AssignmentRegistration(db.Model):
 
     __tablename__ = "account_assignment"

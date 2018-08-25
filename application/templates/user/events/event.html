@@ -47,9 +47,15 @@
       <td>{{ assignment.starttime.strftime("%H:%M") }}</td>
       <td>{{ assignment.endtime.strftime("%H:%M") }}</td>
       <td>
-	      <form method="GET" action="#">
-	        <input type="submit" value="Ilmoittaudu (toiminto ei vielä käytössä)"/>
+        {% if assignment.check_reg_existence(current_user.id, assignment.id ) %}
+        <form method="POST" action="{{ url_for('reg_delete', assignment_id=assignment.id, event_id=event.id) }}">
+	        <input type="submit" value="Poista ilmoittautuminen"/>
 	      </form>
+        {% else %}
+        <form method="POST" action="{{ url_for('reg_create', assignment_id=assignment.id, event_id=event.id) }}">
+	        <input type="submit" value="Ilmoittaudu"/>
+	      </form>
+        {% endif %}
       </td
     </tr>
     {% endfor %}
