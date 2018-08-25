@@ -72,7 +72,7 @@ class Assignment(db.Model):
                     "AND account_assignment.confirmed = '1' "
                     "GROUP BY account.name "
                     "ORDER BY account_assignment.regtime")
-        res = db.engine.execute(stmt, id=assignment_id)
+        res = db.engine.connect().execute(stmt, id=assignment_id)
 
         response = []
         for row in res:
