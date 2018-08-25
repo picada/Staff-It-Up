@@ -47,6 +47,14 @@ Työntekijä:
 
 ### Testitunnukset
 
+#### Työntekijätunnus:
+
 Käyttäjätunnus: test
 
 Salasana: testtest
+
+#### Ylläpitäjätunnus:
+
+Käyttäjätunnus: admin
+
+Salasana: admin
