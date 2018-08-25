@@ -50,7 +50,6 @@ class Assignment(db.Model):
                     "AND assignment.id = account_assignment.assignment_id "
                     "AND account.id = account_assignment.account_id "
                     "AND account_assignment.confirmed = '0' "
-                    "GROUP BY account.id, assignment.id "
                     "ORDER BY account_assignment.regtime")
         res = db.engine.execute(stmt, id=assignment_id)
 
@@ -70,7 +69,6 @@ class Assignment(db.Model):
                     "AND assignment.id = account_assignment.assignment_id "
                     "AND account.id = account_assignment.account_id "
                     "AND account_assignment.confirmed = '1' "
-                    "GROUP BY account.id, assignment.id "
                     "ORDER BY account_assignment.regtime")
         res = db.engine.connect().execute(stmt, id=assignment_id)
 
