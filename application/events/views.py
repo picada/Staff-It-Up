@@ -6,6 +6,7 @@ from application.events.models import Event
 from application.events.forms import EventForm
 from application.assignments.forms import AssignmentForm
 from application.assignments.models import Assignment
+from application.assignments.models import AssignmentRegistration
 import datetime
 
 @app.route("/admin/events", methods=["GET"])
@@ -25,9 +26,9 @@ def events_userindex():
 def events_form():
     return render_template("admin/events/new.html", form = EventForm())
 
-@app.route("/admin/events/<event_id>/", methods=["POST"])
+@app.route("/admin/events/<event_id>/<page>", methods=["POST"])
 @login_required(role="admin")
-def events_set_staffed(event_id):
+def events_set_staffed(event_id, page):
 
     e = Event.query.get(event_id)
     if e.staffed == False:
@@ -36,6 +37,9 @@ def events_set_staffed(event_id):
         e.staffed = False
 
     db.session().commit()
+
+    if page == "event":
+        return redirect(url_for("event_details", event_id=event_id))
 
     return redirect(url_for("events_index"))
 
@@ -59,8 +63,10 @@ def events_delete(event_id):
     e = Event.query.get(event_id)
     assignments = e.assignments
     for assignment in assignments:
+        registrations = assignment.registrations
+        for reg in registrations:
+            db.session.delete(reg)
         db.session.delete(assignment)
-        db.session().commit()
 
     db.session.delete(e);
     db.session().commit()

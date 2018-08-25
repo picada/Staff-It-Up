@@ -13,9 +13,13 @@
         <a href="{{ url_for('event_details', event_id=event.id) }}">{{ event.type }}</a>
       </td>
       <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
-      <td>{{ event.staffed }}</td>
+      {% if event.staffed == False %}
+      <td>Ei</td>
+      {% else %}
+      <td>Kyllä</td>
+      {% endif %}
       <td>
-	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id) }}">
+	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, page="list") }}">
           {% if event.staffed == False %}
           <input type="submit" value="Merkitse täydeksi"/>
           {% else %}

@@ -29,11 +29,19 @@
       <td>Ei</td>
       {% endif %}
     </tr>
-  </table>
+  </table><br>
+  <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, page="event") }}">
+    {% if event.staffed == False %}
+    <input type="submit" value="Merkitse täydeksi"/>
+    {% else %}
+    <input type="submit" value="Avaa hakuun"/>
+    {% endif %}
+  </form>
   <br><br>
 
   <h4>Tapahtumaan liittyvät työtehtävät</h4>
 
+  {% if event.assignments %}
   <table>
     <tr>
       <th>Rooli</th>
@@ -42,15 +50,26 @@
     </tr>
     {% for assignment in assignments %}
     <tr>
-      <td> {{ assignment.role }}</a>
+      <td> {{ assignment.role }} </a>
       </td>
       <td>{{ assignment.starttime.strftime("%H:%M") }}</td>
       <td>{{ assignment.endtime.strftime("%H:%M") }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('assignment_delete', assignment_id=assignment.id, event_id=event.id) }}">
+        <input type="submit" value="Poista työtehtävä"/>
+      </form>
+    </td>
     </tr>
     {% endfor %}
-  </table>
+  </table><br><br>
 
+  <a href="{{ url_for('registrations_list', event_id=event.id) }}">Tarkastele ja hallinnoi ilmoittautumisia</a>
 
+  {% else %}<br>
+  <p>Tapahtumaan ei ole lisätty vielä yhtään työtehtävää.</p>
+
+  {% endif %}
+  <br>
 
   <br><br>
   <h4>Lisää uusi työtehtävä</h4>

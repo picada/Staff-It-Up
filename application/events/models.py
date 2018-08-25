@@ -22,6 +22,7 @@ class Event(db.Model):
     def print_date():
         return self.date.strftime("%d.%m.%Y")
 
+    @staticmethod
     def find_unstaffed_upcoming_events():
 
         response = Event.query.filter(Event.staffed=='0', Event.date > db.func.current_date()).order_by(Event.date).all()

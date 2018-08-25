@@ -27,6 +27,30 @@ def assignment_create(event_id):
 
     return redirect(url_for("event_details", event_id=event_id))
 
+@app.route("/admin/assignments/<event_id>/<assignment_id>/delete", methods=["POST"])
+@login_required(role="admin")
+def assignment_delete(assignment_id, event_id):
+
+    a = Assignment.query.get(assignment_id)
+    registrations = a.registrations
+
+    for reg in registrations:
+        db.session.delete(reg)
+
+    db.session.delete(a)
+    db.session().commit()
+
+    return redirect(url_for("event_details", event_id=event_id))
+
+@app.route("/admin/registrations/<event_id>/")
+@login_required(role="admin")
+def registrations_list(event_id):
+
+    e = Event.query.get(event_id)
+    assignments = e.assignments
+
+    return render_template("admin/assignments/list.html", assignments=assignments, event=e)
+
 @app.route("/user/assignments/<event_id>/<assignment_id>", methods=["POST"])
 @login_required(role="user")
 def reg_create(assignment_id, event_id):
@@ -52,3 +76,16 @@ def reg_delete(assignment_id, event_id):
     db.session().commit()
 
     return redirect(url_for("event_details_user", event_id=event_id))
+
+@app.route("/admin/assignments/<event_id>/<assignment_id>/<account_id>", methods=["POST"])
+@login_required(role="admin")
+def reg_confirm_or_cancel(account_id, assignment_id, event_id):
+
+    r = AssignmentRegistration.query.filter_by(account_id=account_id, assignment_id=assignment_id).first()
+    if r.confirmed == False:
+        r.confirmed = True
+    else:
+        r.confirmed = False
+    db.session().commit()
+
+    return redirect(url_for("registrations_list", event_id=event_id))

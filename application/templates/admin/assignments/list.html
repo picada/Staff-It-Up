@@ -1,0 +1,73 @@
+{% extends "admin/layout.html" %}
+
+{% block body %}
+
+<a href="{{url_for('event_details', event_id=event.id)}}">Siirry tapahtuman tietoihin</a><br><br>
+
+<h3>{{event.type}} {{event.date.strftime("%d.%m.%Y")}} - Vahvisetut työvuorot ja avoimet ilmoittautumiset</h3>
+<br>
+
+<h5>Vahvistetut työvuorot</h5><br>
+
+<table>
+  <tr>
+    <th>Nimi</th>
+    <th>Tehtävä</th>
+    <th>Puhelin</th>
+    <th>Sähköposti</th>
+  </tr>
+
+{% for assignment in assignments%}
+{% if assignment.find_confirmed_registrations(assignment.id) %}
+{% for reg in assignment.find_confirmed_registrations(assignment.id) %}
+  <tr>
+    <td>{{ reg.name }}</td>
+    <td>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</td>
+    <td>{{ reg.phone }}</td>
+    <td>{{ reg.email }}</td>
+    <td>
+      <form method="POST" action="{{ url_for('reg_confirm_or_cancel', account_id=reg.account_id, assignment_id=reg.assignment_id, event_id=event.id) }}">
+        <input type="submit" value="Peru vuoro"/>
+      </form>
+    </td>
+  </tr>
+{% endfor %}
+{% else %}
+
+{% endif %}
+{% endfor %}
+</table>
+<br><br>
+
+<h5>Vahvistamattomat ilmoittautumiset</h5><br>
+
+{% for assignment in assignments%}
+<h6>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</h6><br>
+{% if assignment.find_unconfirmed_registrations(assignment.id) %}
+<table>
+
+{% for reg in assignment.find_unconfirmed_registrations(assignment.id) %}
+  <tr>
+    <th>Nimi</th>
+    <th>Ilmoittautumisaika</th>
+  </tr>
+  <tr>
+    <td>{{ reg.name }}</td>
+    <td>{{ reg.regtime }}</td>
+    <td>
+      <form method="POST" action="{{ url_for('reg_confirm_or_cancel', account_id=reg.account_id, assignment_id=reg.assignment_id, event_id=event.id) }}">
+        <input type="submit" value="Vahvista työvuoro"/>
+      </form>
+    </td>
+  </tr>
+</table>
+<br><br>
+{% endfor %}
+{% else %}
+Työtehtävään ei ole tällä hetkellä yhtään vahvistamatonta ilmoittautumista.
+<br><br><br>
+{% endif %}
+{% endfor %}
+
+
+{% endblock %}
