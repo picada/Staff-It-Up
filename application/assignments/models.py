@@ -50,13 +50,14 @@ class Assignment(db.Model):
                     "AND assignment.id = account_assignment.assignment_id "
                     "AND account.id = account_assignment.account_id "
                     "AND account_assignment.confirmed = '0' "
+                    "GROUP BY account.id, assignment.id "
                     "ORDER BY account_assignment.regtime")
         res = db.engine.execute(stmt, id=assignment_id)
 
         response = []
         for row in res:
-            time = datetime.datetime.strptime(str(row[3]), '%Y-%m-%d %H:%M:%S').strftime('%d.%m.%Y klo %H:%M')
-            response.append({"account_id":row[0], "name":row[1], "assignment_id":row[2], "regtime":time})
+            # time = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f').strftime('%d.%m.%Y klo %H:%M')
+            response.append({"account_id":row[0], "name":row[1], "assignment_id":row[2], "regtime":row[3]})
 
         return response
 
@@ -69,6 +70,7 @@ class Assignment(db.Model):
                     "AND assignment.id = account_assignment.assignment_id "
                     "AND account.id = account_assignment.account_id "
                     "AND account_assignment.confirmed = '1' "
+                    "GROUP BY account.id, assignment.id "
                     "ORDER BY account_assignment.regtime")
         res = db.engine.connect().execute(stmt, id=assignment_id)
 
