@@ -13,13 +13,13 @@ from application.events.models import Event
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
     if request.method == "GET":
-        return render_template("index.html", form = LoginForm())
+        return redirect(url_for("index"))
 
     form = LoginForm(request.form)
 
     user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
     if not user:
-        return render_template("auth/index.html", form = form,
+        return render_template("index.html", needs_staff=Event.find_unstaffed_upcoming_events(), form = LoginForm(),
                                error = "Käyttäjätunnus ja/tai salasana virheellinen")
 
     print("Käyttäjä " + user.name + " tunnistettiin")
