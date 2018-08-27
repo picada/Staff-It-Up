@@ -1,9 +1,73 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h5>Tervetuloa!</h5>
 
-<p>Voit kirjautua sisään työntekijätunnuksella, luoda uuden työntekijätunnuksen tai
-kirjautua sisään ylläpitäjänä yllä olevan valikon kautta.</p>
+{% if current_user.is_authenticated and current_user.role_ok("admin")  %}
+{% if needs_staff is defined and needs_staff %}
+<h5>Tervetuloa!</h5>
+<p>
+  Seuraaviin tuleviin tapahtumiin tarvitaan lisää työntekijöitä:
+</p>
+
+<ul>
+  {% for event in needs_staff %}
+  <li>
+    <a href="{{ url_for('event_details', event_id=event.id) }}">{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
+{% endif %}
+{% elif current_user.is_authenticated and current_user.role_ok("user") %}
+{% if needs_staff is defined and needs_staff %}
+<h5>Tervetuloa!</h5>
+<p>
+  Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:
+</p>
+
+<ul>
+  {% for event in needs_staff %}
+  {% if event.assignments %}
+  <li>
+    <a href="{{ url_for('event_details_user', event_id=event.id) }}">{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+{% else %}
+<p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
+{% endif %}
+{% else %}
+<h5>Kirjaudu sisään</h5><br>
+
+{{ error }}
+{{ login_message }}
+
+<form method="POST" action="{{ url_for('auth_login') }}">
+  <table>
+    <tr>
+      <td>
+	{{ form.username.label }}
+      </td>
+      <td>
+	{{ form.username }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+	{{ form.password.label }}
+      </td>
+      <td>
+	{{ form.password }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+	<input type="submit" value="Kirjaudu sisään"/>
+      </td>
+    </tr>
+</form>
+{% endif %}
 
 {% endblock %}

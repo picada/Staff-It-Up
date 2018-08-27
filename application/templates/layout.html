@@ -15,15 +15,25 @@
 	        </button>
 	        <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
+              {% if current_user.is_authenticated and current_user.role_ok("admin")  %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('events_index') }} ">Listaa tapahtumat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('events_form') }} ">Lisää uusi tapahtuma</a>
+              </li>
+              {% elif current_user.is_authenticated and current_user.role_ok("user") %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('events_userindex') }}">Listaa tapahtumat</a>
+              </li>
+              {% else %}
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('auth_login') }} ">Kirjaudu sisään</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('newUser_form') }} ">Luo uusi käyttäjä</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('admin_login') }} ">Kirjaudu sisään ylläpitäjänä</a>
-              </li>
+              {% endif %}
             </ul>
           </div>
           <div class="form-inline mt-2 mt-md-0">

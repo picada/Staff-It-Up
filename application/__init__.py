@@ -48,6 +48,10 @@ def login_required(role="ANY"):
                         break
 
             if unauthorized:
+                if role == "admin":
+                    login_manager.login_message = "Ole hyvä ja kirjaudu sisään ylläpitäjätunnuksella käyttääksesi tätä toimintoa"
+                if role == "user":
+                    login_manager.login_message = "Ole hyvä ja kirjaudu sisään työntekijätunnuksella käyttääksesi tätä toimintoa"
                 return login_manager.unauthorized()
 
             login_manager.login_view = "auth_login"
