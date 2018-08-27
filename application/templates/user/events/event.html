@@ -42,8 +42,7 @@
     </tr>
     {% for assignment in assignments %}
     <tr>
-      <td> {{ assignment.role }}</a>
-      </td>
+      <td> {{ assignment.role }} </td>
       <td>{{ assignment.starttime.strftime("%H:%M") }}</td>
       <td>{{ assignment.endtime.strftime("%H:%M") }}</td>
       <td>

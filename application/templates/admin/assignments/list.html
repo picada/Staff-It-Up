@@ -45,12 +45,11 @@
 <h6>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</h6><br>
 {% if assignment.find_unconfirmed_registrations(assignment.id) %}
 <table>
-
-{% for reg in assignment.find_unconfirmed_registrations(assignment.id) %}
   <tr>
     <th>Nimi</th>
     <th>Ilmoittautumisaika</th>
   </tr>
+{% for reg in assignment.find_unconfirmed_registrations(assignment.id) %}
   <tr>
     <td>{{ reg.name }}</td>
     <td>{{ reg.regtime }}</td>
