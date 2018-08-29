@@ -3,12 +3,19 @@
 {% block body %}
 
 <h5>Vahvistamattomat ilmoittautumiset</h5><br>
+{% if assignments is defined and assignments %}
 <table>
+  <tr>
+    <th>Tapahtuma</th>
+    <th>Työtehtävä</th>
+  </tr>
   {% for assignment in assignments %}
   <tr>
     <td>
       <a href="{{url_for('event_details_user', event_id=assignment.event_id)}}">
-      {{assignment.event_type}} {{ assignment.event_date.strftime("%d.%m.%Y")}}</a>:
+      {{assignment.event_type}} {{ assignment.event_date.strftime("%d.%m.%Y")}}</a>
+    </td>
+    <td>
       {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}
     </td>
     <td>
@@ -19,5 +26,8 @@
   </tr>
   {% endfor %}
 </table>
+{% else %}
+<p>Sinulla ei ole tällä hetkellä yhtään vahvistamatonta ilmoittautumista.
+{% endif %}
 
 {% endblock %}
