@@ -89,3 +89,8 @@ def reg_confirm_or_cancel(account_id, assignment_id, event_id):
     db.session().commit()
 
     return redirect(url_for("registrations_list", event_id=event_id))
+
+@app.route("/user/assignments/", methods=["GET"])
+@login_required(role="user")
+def reg_userlist():
+        return render_template("user/assignments/list.html", assignments=Assignment.find_unconfirmed_registrations_for_coming_events(user_id=current_user.id))

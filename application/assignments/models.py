@@ -77,6 +77,45 @@ class Assignment(db.Model):
             response.append({"account_id":row[0], "name":row[1], "email":row[2], "phone":row[3], "assignment_id":row[4]})
         return response
 
+    @staticmethod
+    def find_unconfirmed_registrations_for_coming_events(user_id):
+
+        stmt = text("SELECT assignment.role, assignment.starttime, assignment.endtime, event.type, event.date, event.id "
+                    "FROM account, assignment, account_assignment, event "
+                    "WHERE account.id = :id "
+                    "AND account_assignment.account_id = account.id "
+                    "AND assignment.id = account_assignment.assignment_id "
+                    "AND event.id = assignment.event_id "
+                    "AND event.date > CURRENT_DATE "
+                    "AND account_assignment.confirmed = '0' "
+                    "ORDER BY event.date")
+        res = db.engine.connect().execute(stmt, id=user_id)
+
+        response = []
+        for row in res:
+            response.append({"role":row[0], "start":row[1], "end":row[2], "eventtype":row[3], "eventdate":datetime.datetime.strptime(row[4], "%Y-%m-%d"), "eventid":row[5]})
+        return response
+        #
+        # @staticmethod
+        # def find_confirmed_registrations_for_coming_events(user_id):
+        #
+        #     stmt = text("SELECT assignment.role, assignment.starttime, assignment.endtime, event.name, event.date, event.id "
+        #                 "FROM account, assignment, account_assignment, event "
+        #                 "WHERE account.id = :id "
+        #                 "AND account_assignment.account_id = account.id "
+        #                 "AND assignment.id = account_assignment.assignment_id "
+        #                 "AND event.id = assignment.event_id "
+        #                 "AND event.date > CURRENT_DATE "
+        #                 "AND account_assignment.confirmed = '1' "
+        #                 "ORDER BY event.date")
+        #     res = db.engine.connect().execute(stmt, id=assignment_id)
+        #
+        #     response = []
+        #     for row in res:
+        #         response.append({"role":row[0], "start":row[1], "end":row[2], "name":row[3], "datetime":row[4], "event":row[5]})
+        #     return response
+        #     return response
+
 
 class AssignmentRegistration(db.Model):
 

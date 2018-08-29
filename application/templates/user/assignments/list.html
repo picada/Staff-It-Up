@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h5>Vahvistamattomat työvuorot</h5><br>
+
+<ul>
+  {% for assignment in assignments %}
+  <li>{{assignment.eventtype}} {{ assignment.eventdate.strftime("%d.%m.%Y")}}: {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}</li>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

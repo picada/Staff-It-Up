@@ -12,8 +12,8 @@ import datetime
 @app.route("/admin/events", methods=["GET"])
 @login_required(role="admin")
 def events_index():
-    events = Event.query.all()
-    return render_template("admin/events/list.html", events = Event.query.order_by(Event.date).all())
+    events = Event.query.order_by(Event.date).all()
+    return render_template("admin/events/list.html", events = events)
 
 @app.route("/user/events", methods=["GET"])
 @login_required(role="user")

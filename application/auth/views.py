@@ -19,7 +19,7 @@ def auth_login():
 
     user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
     if not user:
-        return render_template("index.html", needs_staff=Event.find_unstaffed_upcoming_events(), form = LoginForm(),
+        return render_template("index.html", form = LoginForm(),
                                error = "Käyttäjätunnus ja/tai salasana virheellinen")
 
     print("Käyttäjä " + user.name + " tunnistettiin")
