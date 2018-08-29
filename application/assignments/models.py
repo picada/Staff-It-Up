@@ -93,7 +93,7 @@ class Assignment(db.Model):
 
         response = []
         for row in res:
-            response.append({"role":row[0], "start":row[1], "end":row[2], "eventtype":row[3], "eventdate":datetime.datetime.strptime(row[4], "%Y-%m-%d"), "eventid":row[5]})
+            response.append({"role":row[0], "start":row[1], "end":row[2], "eventtype":row[3], "eventdate":datetime.datetime.strptime(str(row[4]), "%Y-%m-%d"), "eventid":row[5]})
         return response
         #
         # @staticmethod
