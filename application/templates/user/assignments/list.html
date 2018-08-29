@@ -2,13 +2,22 @@
 
 {% block body %}
 
-<h5>Vahvistamattomat työvuorot</h5><br>
-
-<ul>
+<h5>Vahvistamattomat ilmoittautumiset</h5><br>
+<table>
   {% for assignment in assignments %}
-  <li>{{assignment.eventtype}} {{ assignment.eventdate.strftime("%d.%m.%Y")}}: {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}</li>
-  </li>
+  <tr>
+    <td>
+      <a href="{{url_for('event_details_user', event_id=assignment.event_id)}}">
+      {{assignment.event_type}} {{ assignment.event_date.strftime("%d.%m.%Y")}}</a>:
+      {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}
+    </td>
+    <td>
+      <form method="POST" action="{{ url_for('reg_delete_from_list', assignment_id=assignment.assignment_id) }}">
+        <input type="submit" value="Peru ilmoittautuminen"/>
+      </form>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
 
 {% endblock %}

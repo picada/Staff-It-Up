@@ -77,6 +77,17 @@ def reg_delete(assignment_id, event_id):
 
     return redirect(url_for("event_details_user", event_id=event_id))
 
+@app.route("/user/assignments/delete/<assignment_id>", methods=["POST"])
+@login_required(role="user")
+def reg_delete_from_list(assignment_id):
+
+    r = AssignmentRegistration.query.filter_by(account_id=current_user.id, assignment_id=assignment_id).first()
+
+    db.session.delete(r);
+    db.session().commit()
+
+    return redirect(url_for("reg_userlist"))
+
 @app.route("/admin/assignments/<event_id>/<assignment_id>/<account_id>", methods=["POST"])
 @login_required(role="admin")
 def reg_confirm_or_cancel(account_id, assignment_id, event_id):
@@ -90,7 +101,7 @@ def reg_confirm_or_cancel(account_id, assignment_id, event_id):
 
     return redirect(url_for("registrations_list", event_id=event_id))
 
-@app.route("/user/assignments/", methods=["GET"])
+@app.route("/user/assignments", methods=["GET"])
 @login_required(role="user")
 def reg_userlist():
         return render_template("user/assignments/list.html", assignments=Assignment.find_unconfirmed_registrations_for_coming_events(user_id=current_user.id))
