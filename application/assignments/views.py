@@ -86,7 +86,7 @@ def reg_delete_from_list(assignment_id):
     db.session.delete(r);
     db.session().commit()
 
-    return redirect(url_for("reg_userlist"))
+    return redirect(url_for("reg_list_user"))
 
 @app.route("/admin/assignments/<event_id>/<assignment_id>/<account_id>", methods=["POST"])
 @login_required(role="admin")
@@ -103,5 +103,10 @@ def reg_confirm_or_cancel(account_id, assignment_id, event_id):
 
 @app.route("/user/assignments", methods=["GET"])
 @login_required(role="user")
-def reg_userlist():
-        return render_template("user/assignments/list.html", assignments=Assignment.find_unconfirmed_registrations_for_coming_events(user_id=current_user.id))
+def reg_list_user():
+        return render_template("user/assignments/unconfirmed_list.html", assignments=Assignment.find_unconfirmed_registrations_for_coming_events(user_id=current_user.id))
+
+@app.route("/user/assignments/confirmed", methods=["GET"])
+@login_required(role="user")
+def confirmed_list_user():
+        return render_template("user/assignments/confirmed_list.html", assignments=Assignment.find_confirmed_registrations_for_coming_events(user_id=current_user.id))

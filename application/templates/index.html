@@ -22,7 +22,8 @@
 {% elif current_user.is_authenticated and current_user.role_ok("user") %}
 {% if needs_staff is defined and needs_staff %}
 <h5>Tervetuloa!</h5>
-<a href="{{ url_for('reg_userlist') }}">Tarkastele vahvistamattomia ilmoittautumisia</a>
+<a href="{{ url_for('reg_list_user') }}">Tarkastele vahvistamattomia ilmoittautumisia</a><br>
+<a href="{{ url_for('confirmed_list_user') }}">Tarkastele vahvisettuja työvuoroja</a>
 <p>
   Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:
 </p>

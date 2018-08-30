@@ -55,7 +55,6 @@ class Assignment(db.Model):
 
         response = []
         for row in res:
-            # time = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S.%f').strftime('%d.%m.%Y klo %H:%M')
             response.append({"account_id":row[0], "name":row[1], "assignment_id":row[2], "regtime":row[3]})
 
         return response
@@ -77,6 +76,7 @@ class Assignment(db.Model):
             response.append({"account_id":row[0], "name":row[1], "email":row[2], "phone":row[3], "assignment_id":row[4]})
         return response
 
+
     @staticmethod
     def find_unconfirmed_registrations_for_coming_events(user_id):
 
@@ -97,26 +97,27 @@ class Assignment(db.Model):
                     "event_type":row[3], "event_date":datetime.datetime.strptime(str(row[4]),
                     "%Y-%m-%d"), "event_id":row[5], "assignment_id":row[6]})
         return response
-        #
-        # @staticmethod
-        # def find_confirmed_registrations_for_coming_events(user_id):
-        #
-        #     stmt = text("SELECT assignment.role, assignment.starttime, assignment.endtime, event.name, event.date, event.id "
-        #                 "FROM account, assignment, account_assignment, event "
-        #                 "WHERE account.id = :id "
-        #                 "AND account_assignment.account_id = account.id "
-        #                 "AND assignment.id = account_assignment.assignment_id "
-        #                 "AND event.id = assignment.event_id "
-        #                 "AND event.date > CURRENT_DATE "
-        #                 "AND account_assignment.confirmed = '1' "
-        #                 "ORDER BY event.date")
-        #     res = db.engine.connect().execute(stmt, id=assignment_id)
-        #
-        #     response = []
-        #     for row in res:
-        #         response.append({"role":row[0], "start":row[1], "end":row[2], "name":row[3], "datetime":row[4], "event":row[5]})
-        #     return response
-        #     return response
+
+    @staticmethod
+    def find_confirmed_registrations_for_coming_events(user_id):
+
+        stmt = text("SELECT assignment.role, assignment.starttime, assignment.endtime, event.type, event.date, event.id, assignment.id "
+                    "FROM account, assignment, account_assignment, event "
+                    "WHERE account.id = :id "
+                    "AND account_assignment.account_id = account.id "
+                    "AND assignment.id = account_assignment.assignment_id "
+                    "AND event.id = assignment.event_id "
+                    "AND event.date > CURRENT_DATE "
+                    "AND account_assignment.confirmed = '1' "
+                    "ORDER BY event.date")
+        res = db.engine.connect().execute(stmt, id=user_id)
+
+        response = []
+        for row in res:
+            response.append({"role":row[0], "start":str(row[1]), "end":str(row[2]),
+                    "event_type":row[3], "event_date":datetime.datetime.strptime(str(row[4]),
+                    "%Y-%m-%d"), "event_id":row[5], "assignment_id":row[6]})
+        return response
 
 
 class AssignmentRegistration(db.Model):

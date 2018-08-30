@@ -7,22 +7,22 @@
 <h3>{{event.type}} {{event.date.strftime("%d.%m.%Y")}} - Vahvisetut työvuorot ja avoimet ilmoittautumiset</h3>
 <br>
 
-<h5>Vahvistetut työvuorot</h5><br>
+<h4>Vahvistetut työvuorot</h4><br>
 
+{% if event.find_confirmed_registrations(event.id) %}
 <table>
   <tr>
     <th>Nimi</th>
     <th>Tehtävä</th>
+    <th>Aika</th>
     <th>Puhelin</th>
     <th>Sähköposti</th>
   </tr>
-
-{% for assignment in assignments%}
-{% if assignment.find_confirmed_registrations(assignment.id) %}
-{% for reg in assignment.find_confirmed_registrations(assignment.id) %}
+{% for reg in event.find_confirmed_registrations(event.id) %}
   <tr>
     <td>{{ reg.name }}</td>
-    <td>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</td>
+    <td>{{ reg.assignment_role}}
+    <td>{{ reg.assignment_start[:5] }} - {{ reg.assignment_end[:5] }}</td>
     <td>{{ reg.phone }}</td>
     <td>{{ reg.email }}</td>
     <td>
@@ -33,16 +33,15 @@
   </tr>
 {% endfor %}
 {% else %}
-
+Tapahtumaan ei tällä hetkellä ole yhtään vahvistettua ilmoittautumista.<br><br>
 {% endif %}
-{% endfor %}
 </table>
 <br><br>
 
-<h5>Vahvistamattomat ilmoittautumiset</h5><br>
+<h4>Vahvistamattomat ilmoittautumiset</h4><br>
 
 {% for assignment in assignments%}
-<h6>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</h6><br>
+<h5>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</h5><br>
 {% if assignment.find_unconfirmed_registrations(assignment.id) %}
 <table>
   <tr>
@@ -59,12 +58,10 @@
       </form>
     </td>
   </tr>
-</table>
-<br><br>
 {% endfor %}
+</table><br><br>
 {% else %}
-Työtehtävään ei ole tällä hetkellä yhtään vahvistamatonta ilmoittautumista.
-<br><br><br>
+Työtehtävään ei ole tällä hetkellä yhtään vahvistamatonta ilmoittautumista.<br><br><br>
 {% endif %}
 {% endfor %}
 
