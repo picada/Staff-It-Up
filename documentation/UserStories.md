@@ -46,7 +46,7 @@ Alla on kuvattuna sovellukselle olennaisia käyttäjätarinoita.
   - voin tehdä työtunti-ilmoitukset helposti menneiden tapahtumien listan perusteella
   - Toteutettu - alla kysely joka toteuttaa ylemmän toiveen, alemman toiveen kysely lähes identtinen sillä erotuksella, että toisessa verrataan päivämäärää toisin päin:
   ```
-SELECT assignment.role, assignment.starttime, assignment.endtime, event.type, event.date, event.id, assignment.id 
+  SELECT assignment.role, assignment.starttime, assignment.endtime, event.type, event.date, event.id, assignment.id 
                     FROM account, assignment, account_assignment, event 
                     WHERE account.id = :id
                     AND account_assignment.account_id = account.id 
