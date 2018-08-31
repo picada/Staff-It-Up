@@ -4,7 +4,7 @@ Tietokantasovellus-kurssin harjoitustyönä toteutettava sovellus.
 
 [Heroku](http://staffitup.herokuapp.com)
 
-[Tietokantakaavio](https://github.com/picada/Staff-It-Up/blob/master/documentation/Tsoha%20tietokantakaavio.jpg)
+[Tietokantakaavio](https://github.com/picada/Staff-It-Up/blob/master/documentation/Tsoha%20tietokantakaavio-2.jpg)
 
 [User Stories](https://github.com/picada/Staff-It-Up/blob/master/documentation/UserStories.md)
 
