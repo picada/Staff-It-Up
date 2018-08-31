@@ -31,7 +31,7 @@ Työnantaja:
 * Uusien työntekijä- ja työnantajakäyttäjien lisääminen työnantajanäkymästä
 * Käyttäjien poistaminen
 * Tapahtumien luominen, muokkaaminen ja poistaminen
-* Tapahtumakohtaisten työtehtävien luominen, muokkaaminen ja poistaminen
+* Tapahtumakohtaisten työtehtävien luominen ja poistaminen
 * Työvuorojen vahvistaminen ilmoittautumisten perusteella
 * Varatun henkilökunnan tarkastelu tapahtumakohtaisesti
 * Yhteystietojen tarkastelu
@@ -40,7 +40,7 @@ Työntekijä:
 * Uuden käyttäjän luominen
 * Kirjautuminen
 * Omien tietojen muokkaus
-* Saatavilla olevien työvuorojen haku ja listaus 
+* Saatavilla olevien työvuorojen listaus 
 * Ilmoittautuminen tiettyyn työtehtävään
 * Ilmoittautumisen peruminen
 * Omien ilmoittautumisten ja vahvistettujen työvuorojen listaus ja tarkastelu
@@ -57,4 +57,16 @@ Salasana: testtest
 
 Käyttäjätunnus: admin
 
-Salasana: admin
+Salasana: admina
+
+### Puutteet / rajoitukset
+
+Alkuperäisistä suunnitelluista toiminnallisuuksista toteuttamatta jäi mm. kaikkien saatavilla olevien työtehtävien listaus samassa näkymässä.
+
+Lisäksi jatkokehityksenä ajatuksena toiminto, jossa sovelluksen etusivulla kirjautumisen jälkeen listattaisiin työntekijän kohdalla ne työvuorot, jotka on lisätty järjestelmään edellisen kirjautumiskerran jälkeen. Toiminnon toteuttaminen vaatii tietokannan rakenteen päivittämistä, joten tässä kohtaa jäi väliin.
+
+Sovelluksessa olisi myös hyvä hyöyntää kattavammin erilaisia hakutomintoja sekä esim. sivutusta.
+
+Myös salasanojen suojausta tulisi vielä parantaa ja suojata polut esim. käyttäjätietojen muokkaukseen niin, ettei käyttäjä pääse käsiksi toisen käyttäjän tietoihin. Koodin rakenne kaipaisi myös siistimistä.
+
+
