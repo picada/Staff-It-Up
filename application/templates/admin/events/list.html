@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block body %}
-{% if page=="needs_staff" %}
+{% if view=="needs_staff" %}
 <h4>Tapahtumat, joita ei ole merkitty täydeksi</h4>
 {% endif %}
-{% if page=="upcoming" %}
+{% if view=="upcoming" %}
 <h4>Kaikki tulevat tapahtumat</h4>
 {% endif %}
-{% if page=="past" %}
+{% if view=="past" %}
 <h4>Kaikki menneet tapahtumat</h4>
 {% endif %}
   <table class="table">
@@ -34,7 +34,7 @@
         </form>
       </td>
       <td>
-	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, page=page) }}">
+	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, view=view) }}">
           {% if event.staffed == False %}
           <input type="submit" value="Merkitse täydeksi"/>
           {% else %}
@@ -43,7 +43,7 @@
 	      </form>
       </td>
       <td>
-	      <form method="POST" action="{{ url_for('events_delete', event_id=event.id, page=page) }}" onclick="return confirm('Haluatko varmasti poistaa tapahtuman?')">
+	      <form method="POST" action="{{ url_for('events_delete', event_id=event.id, view=view) }}" onclick="return confirm('Haluatko varmasti poistaa tapahtuman?')">
 	        <input type="submit" value="Poista tapahtuma"/>
 	      </form>
       </td>

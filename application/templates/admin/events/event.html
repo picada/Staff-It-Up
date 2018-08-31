@@ -30,7 +30,7 @@
       {% endif %}
     </tr>
   </table><br>
-  <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, page="event") }}">
+  <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, view="event") }}">
     {% if event.staffed == False %}
     <input type="submit" value="Merkitse täydeksi"/>
     {% else %}

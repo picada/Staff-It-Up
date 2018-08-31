@@ -23,9 +23,9 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Selaa tapahtumia</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ url_for('events_index', page="needs_staff") }}">Tapahtumat joihin tarvitaan henkilökuntaa</a>
-                <a class="dropdown-item" href="{{ url_for('events_index', page="upcoming") }}">Kaikki tulevat tapahtumat</a>
-                <a class="dropdown-item" href="{{ url_for('events_index', page="past") }}">Menneet tapahtumat</a>
+                <a class="dropdown-item" href="{{ url_for('events_index', view="needs_staff", page=1) }}">Tapahtumat joihin tarvitaan henkilökuntaa</a>
+                <a class="dropdown-item" href="{{ url_for('events_index', view="upcoming", page=1) }}">Kaikki tulevat tapahtumat</a>
+                <a class="dropdown-item" href="{{ url_for('events_index', view="past", page=1) }}">Menneet tapahtumat</a>
               </div>
               </li
               <li class="nav-item">

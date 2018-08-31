@@ -21,12 +21,12 @@
       <td>{{ user.phone }}</td>
       <td>{{ user.email }}</td>
       <td>
-	      <form method="GET" action="{{ url_for('user_update', user_id=user.id, page=page) }}">
+	      <form method="GET" action="{{ url_for('user_update', user_id=user.id) }}">
 	        <input type="submit" value="Muokkaa tietoja"/>
 	      </form>
       </td>
       <td>
-        <form method="POST" action="{{ url_for('user_delete', user_id=user.id, page=page) }}" onclick="return confirm('Haluatko varmasti poistaa käyttäjän?')">
+        <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}" onclick="return confirm('Haluatko varmasti poistaa käyttäjän?')">
 	        <input type="submit" value="Poista käyttäjä"/>
 	      </form>
       </td>

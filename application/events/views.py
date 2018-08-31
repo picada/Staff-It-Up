@@ -9,19 +9,19 @@ from application.assignments.models import Assignment
 from application.assignments.models import AssignmentRegistration
 import datetime
 
-@app.route("/admin/events/<page>", methods=["GET"])
+@app.route("/admin/events/<view>", methods=["GET"])
 @login_required(role="admin")
-def events_index(page):
+def events_index(view):
     has_assignments = True
-    if page=="needs_staff":
+    if view=="needs_staff":
         events=Event.find_unstaffed_upcoming_events()
         if not Event.has_assignments(events):
             has_assignments = False
-    if page=="upcoming":
+    if view=="upcoming":
         events=Event.query.filter(Event.date > db.func.current_date()).order_by(Event.date).all()
-    if page=="past":
+    if view=="past":
         events=Event.query.filter(Event.date < db.func.current_date()).order_by(Event.date.desc()).all()
-    return render_template("admin/events/list.html", events = events, page=page, has_assignments=has_assignments)
+    return render_template("admin/events/list.html", events = events, view=view, has_assignments=has_assignments)
 
 @app.route("/user/events", methods=["GET"])
 @login_required(role="user")
@@ -35,9 +35,9 @@ def events_userindex():
 def events_form():
     return render_template("admin/events/new.html", form = EventForm())
 
-@app.route("/admin/events/<event_id>/<page>", methods=["POST"])
+@app.route("/admin/events/<event_id>/<view>", methods=["POST"])
 @login_required(role="admin")
-def events_set_staffed(event_id, page):
+def events_set_staffed(event_id, view):
 
     e = Event.query.get(event_id)
     if e.staffed == False:
@@ -47,10 +47,10 @@ def events_set_staffed(event_id, page):
 
     db.session().commit()
 
-    if page == "event":
+    if view == "event":
         return redirect(url_for("event_details", event_id=event_id))
 
-    return redirect(url_for("events_index", page=page))
+    return redirect(url_for("events_index", view=view))
 
 @app.route("/admin/events/<event_id>/details", methods=["GET"])
 @login_required(role="admin")
@@ -65,9 +65,9 @@ def event_details_user(event_id):
     return render_template("user/events/event.html", event=event, assignments=event.assignments)
 
 
-@app.route("/admin/events/delete/<event_id>/<page>", methods=["POST"])
+@app.route("/admin/events/delete/<event_id>/<view>", methods=["POST"])
 @login_required(role="admin")
-def events_delete(event_id, page):
+def events_delete(event_id, view):
 
     e = Event.query.get(event_id)
     assignments = e.assignments
@@ -80,7 +80,7 @@ def events_delete(event_id, page):
     db.session.delete(e);
     db.session().commit()
 
-    return redirect(url_for("events_index", page=page))
+    return redirect(url_for("events_index", view=view))
 
 @app.route("/admin/events/", methods=["POST"])
 @login_required(role="admin")
@@ -96,7 +96,7 @@ def events_create():
     db.session().add(e)
     db.session().commit()
 
-    return redirect(url_for("events_index"))
+    return redirect(url_for("events_index", view="upcoming"))
 
 @app.route("/admin/update/event/<event_id>/", methods=["GET", "POST"])
 @login_required("admin")
