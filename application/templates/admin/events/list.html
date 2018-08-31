@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 
+{% if page=="needs_staff" %}
+<h3>Tapahtumat, joita ei ole merkitty täydeksi<h3>
+{% endif %}
+{% if page=="upcoming" %}
+<h3>Kaikki tulevat tapahtumat<h3>
+{% endif %}
+{% if page=="past" %}
+<h3>Kaikki menneet tapahtumat<h3>
+{% endif %}
+
 {% block body %}
   <table class="table">
     <tr>
@@ -7,6 +17,7 @@
       <th>Pvm</th>
       <th>Täynnä</th>
     </tr>
+    {% if events is defined and events %}
     {% for event in events %}
     <tr>
       <td>
@@ -24,7 +35,7 @@
         </form>
       </td>
       <td>
-	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, page="list") }}">
+	      <form method="POST" action="{{ url_for('events_set_staffed', event_id=event.id, page=page) }}">
           {% if event.staffed == False %}
           <input type="submit" value="Merkitse täydeksi"/>
           {% else %}
@@ -33,13 +44,14 @@
 	      </form>
       </td>
       <td>
-	      <form method="POST" action="{{ url_for('events_delete', event_id=event.id) }}" onclick="return confirm('Haluatko varmasti poistaa tapahtuman?')">
+	      <form method="POST" action="{{ url_for('events_delete', event_id=event.id, page=page) }}" onclick="return confirm('Haluatko varmasti poistaa tapahtuman?')">
 	        <input type="submit" value="Poista tapahtuma"/>
 	      </form>
       </td>
     </td>
     </tr>
     {% endfor %}
+    {% endif %}
   </table>
 
 {% endblock %}

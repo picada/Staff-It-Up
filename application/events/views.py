@@ -9,11 +9,23 @@ from application.assignments.models import Assignment
 from application.assignments.models import AssignmentRegistration
 import datetime
 
-@app.route("/admin/events", methods=["GET"])
+@app.route("/admin/events/needs_staff", methods=["GET"])
 @login_required(role="admin")
 def events_index():
-    events = Event.query.order_by(Event.date).all()
-    return render_template("admin/events/list.html", events = events)
+    events=Event.find_unstaffed_upcoming_events()
+    return render_template("admin/events/list.html", events=events, page="needs_staff")
+
+@app.route("/admin/events/upcoming", methods=["GET"])
+@login_required(role="admin")
+def events_upcoming():
+    events=Event.query.filter(Event.date > db.func.current_date()).order_by(Event.date).all()
+    return render_template("admin/events/list.html", events=events, page="upcoming")
+
+@app.route("/admin/events/past", methods=["GET"])
+@login_required(role="admin")
+def events_past():
+    events=Event.query.filter(Event.date < db.func.current_date()).order_by(Event.date.desc()).all()
+    return render_template("admin/events/list.html", events=events, page="past")
 
 @app.route("/user/events", methods=["GET"])
 @login_required(role="user")
@@ -41,6 +53,10 @@ def events_set_staffed(event_id, page):
     if page == "event":
         return redirect(url_for("event_details", event_id=event_id))
 
+    if page=="upcoming":
+        return redirect(url_for("events_upcoming"))
+    if page=="past":
+        return redirect(url_for("events_past"))
     return redirect(url_for("events_index"))
 
 @app.route("/admin/events/<event_id>/details", methods=["GET"])
@@ -58,7 +74,7 @@ def event_details_user(event_id):
 
 @app.route("/admin/events/delete/<event_id>/", methods=["POST"])
 @login_required(role="admin")
-def events_delete(event_id):
+def events_delete(event_id, page):
 
     e = Event.query.get(event_id)
     assignments = e.assignments
@@ -71,7 +87,12 @@ def events_delete(event_id):
     db.session.delete(e);
     db.session().commit()
 
+    if page=="upcoming":
+        return redirect(url_for("events_upcoming"))
+    if page=="past":
+        return redirect(url_for("events_past"))
     return redirect(url_for("events_index"))
+
 
 @app.route("/admin/events/", methods=["POST"])
 @login_required(role="admin")
