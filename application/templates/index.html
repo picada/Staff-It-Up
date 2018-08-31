@@ -44,7 +44,7 @@
 {% elif current_user.is_authenticated and current_user.role_ok("user") %}
 <h4>Ajankohtaista</h4><br>
 
-{% if needs_staff is defined and needs_staff and has_assignments==False %}
+{% if needs_staff is defined and needs_staff and has_assignments %}
 <p>
   <strong>Seuraavissa kuukauden sisään toteutuvissa tapahtumissa on vapaita työvuoroja:</strong>
 </p>

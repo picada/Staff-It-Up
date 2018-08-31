@@ -42,7 +42,7 @@ def assignment_delete(assignment_id, event_id):
 
     return redirect(url_for("event_details", event_id=event_id))
 
-@app.route("/admin/registrations/<event_id>/")
+@app.route("/admin/registrations/<event_id>")
 @login_required(role="admin")
 def registrations_list(event_id):
 

@@ -1,5 +1,5 @@
 from application import app, db, login_required
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, url_for, flash
 from flask_login import current_user
 
 from application.events.models import Event
@@ -15,7 +15,7 @@ def events_index(page):
     has_assignments = True
     if page=="needs_staff":
         events=Event.find_unstaffed_upcoming_events()
-        if Event.has_assignments(events):
+        if not Event.has_assignments(events):
             has_assignments = False
     if page=="upcoming":
         events=Event.query.filter(Event.date > db.func.current_date()).order_by(Event.date).all()
@@ -26,7 +26,9 @@ def events_index(page):
 @app.route("/user/events", methods=["GET"])
 @login_required(role="user")
 def events_userindex():
-    return render_template("user/events/list.html", needs_staff=Event.find_unstaffed_upcoming_events())
+    needs_staff=Event.find_unstaffed_upcoming_events()
+    has_assignments = Event.has_assignments(needs_staff)
+    return render_template("user/events/list.html", needs_staff=needs_staff, has_assignments=has_assignments)
 
 @app.route("/admin/events/new/")
 @login_required(role="admin")
