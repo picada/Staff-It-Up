@@ -1,5 +1,7 @@
 from application import db
 
+from sqlalchemy.sql import text
+
 class User(db.Model):
 
     __tablename__ = "account"
@@ -16,6 +18,7 @@ class User(db.Model):
     phone = db.Column(db.String(20))
 
     roles = db.relationship("Role", secondary="account_role")
+    registrations = db.relationship("AssignmentRegistration", backref='account', lazy=True)
 
     def __init__(self, name, username, password, email, phone):
         self.name = name
@@ -41,6 +44,23 @@ class User(db.Model):
                     if user_role.name == role:
                         return True
 
+    @staticmethod
+    def delete_user(user_id):
+
+        db.engine.connect().execute("DELETE FROM account_assignment WHERE account_assignment.account_id = :id", id=user_id)
+        db.engine.connect().execute("DELETE FROM account_role WHERE account_role.account_id = :id", id=user_id)
+        db.engine.connect().execute("DELETE FROM account WHERE account.id = :id", id=user_id)
+
+
+    @staticmethod
+    def switch_roles(role_one, role_two, user_id):
+
+        r = Role.query.filter_by(name=role_one).first()
+        user_role = UserRole.query.filter_by(account_id=user_id, role_id=r.id).first()
+        db.session.delete(user_role)
+        r = Role.query.filter_by(name=role_two).first()
+        db.session.add(UserRole(user_id, r.id))
+        db.session().commit()
 
 class Role(db.Model):
 

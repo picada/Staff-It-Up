@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% if upcoming_shifts is defined and upcoming_shifts %}
+<h5>Vahvistetut tulevat työvuorot</h5><br>
+<table class="table" style="width:auto;">
+  <tr>
+    <th>Pvm</b>
+    <th>Tapahtuma</th>
+    <th>Työtehtävä</th>
+  </tr>
+  {% for assignment in upcoming_shifts %}
+  <tr>
+    <td>
+      {{ assignment.event_date.strftime("%d.%m.%Y")}}
+    </td>
+    <td>
+      <a href="{{url_for('event_details_user', event_id=assignment.event_id)}}">
+      {{assignment.event_type}}</a>
+    </td>
+    <td>
+      {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% elif upcoming_shifts is defined %}
+<p>Sinulla ei ole tällä hetkellä yhtään vahvistettua tulevaa työvuoroa.</p>
+
+{elif unconfirmed_assignments is defined and unconfirmed_assignments %}
+<h5>Vahvistamattomat ilmoittautumiset</h5><br>
+
+<table class="table" style="width:auto;">
+  <tr>
+    <th>Tapahtuma</th>
+    <th>Työtehtävä</th>
+  </tr>
+  {% for assignment in unconfirmed_assignments %}
+  <tr>
+    <td>
+      <a href="{{url_for('event_details_user', event_id=assignment.event_id)}}">
+      {{assignment.event_type}} {{ assignment.event_date.strftime("%d.%m.%Y")}}</a>
+    </td>
+    <td>
+      {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}
+    </td>
+    <td>
+      <form method="POST" action="{{ url_for('reg_delete_from_list', assignment_id=assignment.assignment_id) }}">
+        <input type="submit" value="Peru ilmoittautuminen"/>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+<table class="table" style="width:auto;">
+{% elif unconfirmed_assignments is defined %}
+<p>Sinulla ei ole tällä hetkellä yhtään vahvistamatonta ilmoittautumista.
+
+{% elif past_shifts is defined and past_shifts %}
+<h5>Menneet toteutuneet työvuorot</h5><br>
+
+<table>
+  <tr>
+    <th>Tapahtuma</th>
+    <th>Työtehtävä</th>
+  </tr>
+  {% for assignment in past_shifts %}
+  <tr>
+    <td>
+      <a href="{{url_for('event_details_user', event_id=assignment.event_id)}}">
+      {{assignment.event_type}} {{ assignment.event_date.strftime("%d.%m.%Y")}}</a>
+    </td>
+    <td>
+      {{assignment.role}} klo {{ assignment.start[:5] }} - {{ assignment.end[:5] }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>Sinulla ei ole yhtään mennyttä vahvistettua työvuoroa.
+{% endif %}
+
+{% endblock %}

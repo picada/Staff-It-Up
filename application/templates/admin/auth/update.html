@@ -2,10 +2,10 @@
 
 {% block body %}
 
-<h5>Luo uusi työntekijätunnus</h5><br>
+<h4>Päivitä käyttäjän tiedot</h4><br>
 
 {{ error }}
-<form method="POST" action="{{ url_for('user_create') }}">
+<form method="POST" action="{{ url_for('user_update_admin', user_id=user.id) }}">
   <table>
     <tr>
       <td>
@@ -24,18 +24,11 @@
     </tr>
     <tr>
       <td>
-        {{ form.username.label }}
+        Käyttäjätunnus
       </td>
       <td>
-        {{ form.username }}
+        {{ user.username }}
       </td>
-      <td>
-	      <ul>
-	        {% for error in form.username.errors %}
-	        <li>{{ error }}</li>
-	        {% endfor %}
-	      </ul>
-	    </td>
     </tr>
     <tr>
       <td>
@@ -91,8 +84,20 @@
       </td>
     </tr>
     <tr>
+      <td>
+      {% if user.role_ok("admin") %}
+        Muuta työntekijäkäyttäjäksi
+      {% else %}
+        Lisää ylläpitäjäoikeudet
+      {% endif %}
+      </td>
+      <td>
+        {{ form.admin }}
+      </td>
+    </tr>
+    <tr>
      <td colspan="2">
-       <input type="submit" value="Lisää uusi käyttäjä"/>
+       <input type="submit" value="Päivitä tiedot"/>
       </td>
     </tr>
    </table>

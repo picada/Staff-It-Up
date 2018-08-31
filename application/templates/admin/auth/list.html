@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h4>Käyttäjälistaus</h4><br>
+
+<h5>Ylläpitäjät</h5>
+
+  <table class="table" style="width:auto;">
+    <tr>
+      <th>Nimi</th>
+      <th>Puhelin</th>
+      <th>Sähköposti</th>
+    </tr>
+    {% for user in users %}
+    {% if user.role_ok("admin") %}
+    <tr>
+      <td>
+        {{ user.name }}
+      </td>
+      <td>{{ user.phone }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+	      <form method="GET" action="{{ url_for('user_update', user_id=user.id) }}">
+	        <input type="submit" value="Muokkaa tietoja"/>
+	      </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}" onclick="return confirm('Haluatko varmasti poistaa käyttäjän?')">
+	        <input type="submit" value="Poista käyttäjä"/>
+	      </form>
+      </td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+  </table><br><br>
+
+  <h5>Työntekjiät</h5>
+
+  <table class="table" style="width:auto;">
+
+    <tr>
+      <th>Nimi</th>
+      <th>Puhelin</th>
+      <th>Sähköposti</th>
+    </tr>
+    {% for user in users %}
+    {% if user.role_ok("user") %}
+    <tr>
+      <td>
+        {{ user.name }}
+      </td>
+      <td>{{ user.phone }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <form method="GET" action="{{ url_for('user_update', user_id=user.id) }}">
+          <input type="submit" value="Muokkaa tietoja"/>
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('user_delete', user_id=user.id) }}" onclick="return confirm('Haluatko varmasti poistaa käyttäjän?')">
+	        <input type="submit" value="Poista käyttäjä"/>
+	      </form>
+      </td>
+      {% endif %}
+      {% endfor %}
+    </tr>
+  </table>
+
+{% endblock %}

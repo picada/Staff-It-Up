@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
+<h3>Lisää uusi tapahtuma</h3><br>
 <form method="POST" action="{{ url_for('events_create') }}" >
   <table>
     <tr>

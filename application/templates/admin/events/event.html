@@ -2,27 +2,27 @@
 
 {% block body %}
 
-<h2>{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</h2>
+<h3>{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</h3><br>
 
-  <table>
+  <table class="table" style="width:50%;">
     <tr>
-      <td>Nimi / Tyyppi: </td>
+      <th>Nimi / Tyyppi: </th>
       <td>{{ event.type }}</td>
     </tr>
     <tr>
-      <td>Päivämäärä: </td>
+      <th>Päivämäärä: </th>
       <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
     </tr>
     <tr>
-      <td>Pax: </td>
+      <th>Pax: </th>
       <td>{{ event.pax }}</td>
     </tr>
     <tr>
-      <td>Info: </td>
+      <th>Info: </th>
       <td>{{ event.info }}</td>
     </tr>
     <tr>
-      <td>Täynnä: </td>
+      <th>Täynnä: </th>
       {% if event.staffed  %}
       <td>Kyllä</td>
       {% else %}
@@ -42,7 +42,7 @@
   <h4>Tapahtumaan liittyvät työtehtävät</h4>
 
   {% if event.assignments %}
-  <table>
+  <table class="table" style="width:auto;">
     <tr>
       <th>Rooli</th>
       <th>Alkaa</th>
@@ -55,13 +55,13 @@
       <td>{{ assignment.starttime.strftime("%H:%M") }}</td>
       <td>{{ assignment.endtime.strftime("%H:%M") }}</td>
       <td>
-        <form method="POST" action="{{ url_for('assignment_delete', assignment_id=assignment.id, event_id=event.id) }}">
+        <form method="POST" action="{{ url_for('assignment_delete', assignment_id=assignment.id, event_id=event.id) }}" onclick="return confirm('Haluatko varmasti poistaa työtehtävän?')">
         <input type="submit" value="Poista työtehtävä"/>
       </form>
     </td>
     </tr>
     {% endfor %}
-  </table><br><br>
+  </table><br>
 
   <a href="{{ url_for('registrations_list', event_id=event.id) }}">Tarkastele ja hallinnoi ilmoittautumisia</a>
 

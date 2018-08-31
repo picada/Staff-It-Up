@@ -119,6 +119,33 @@ class Assignment(db.Model):
                     "%Y-%m-%d"), "event_id":row[5], "assignment_id":row[6]})
         return response
 
+        response = []
+        for row in res:
+            response.append({"role":row[0], "start":str(row[1]), "end":str(row[2]),
+                    "event_type":row[3], "event_date":datetime.datetime.strptime(str(row[4]),
+                    "%Y-%m-%d"), "event_id":row[5], "assignment_id":row[6]})
+        return response
+
+    @staticmethod
+    def find_confirmed_registrations_for_past_events(user_id):
+
+        stmt = text("SELECT assignment.role, assignment.starttime, assignment.endtime, event.type, event.date, event.id, assignment.id "
+                    "FROM account, assignment, account_assignment, event "
+                    "WHERE account.id = :id "
+                    "AND account_assignment.account_id = account.id "
+                    "AND assignment.id = account_assignment.assignment_id "
+                    "AND event.id = assignment.event_id "
+                    "AND event.date < CURRENT_DATE "
+                    "AND account_assignment.confirmed = '1' "
+                    "ORDER BY event.date DESC")
+        res = db.engine.connect().execute(stmt, id=user_id)
+        response = []
+        for row in res:
+            response.append({"role":row[0], "start":str(row[1]), "end":str(row[2]),
+                    "event_type":row[3], "event_date":datetime.datetime.strptime(str(row[4]),
+                    "%Y-%m-%d"), "event_id":row[5], "assignment_id":row[6]})
+        return response
+
 
 class AssignmentRegistration(db.Model):
 

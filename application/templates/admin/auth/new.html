@@ -2,10 +2,10 @@
 
 {% block body %}
 
-<h5>Luo uusi työntekijätunnus</h5><br>
+<h4>Luo uusi työntekijä- tai ylläpitäjätunnus</h4><br>
 
 {{ error }}
-<form method="POST" action="{{ url_for('user_create') }}">
+<form method="POST" action="{{ url_for('user_create_as_admin') }}">
   <table>
     <tr>
       <td>
@@ -88,6 +88,14 @@
           <li>{{ error }}</li>
           {% endfor %}
         </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.admin.label }}
+      </td>
+      <td>
+        {{ form.admin }}
       </td>
     </tr>
     <tr>

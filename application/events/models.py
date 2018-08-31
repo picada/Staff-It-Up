@@ -1,6 +1,7 @@
 from application import db
 
 from sqlalchemy.sql import text
+import datetime
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,4 +48,36 @@ class Event(db.Model):
             response.append({"account_id":row[0], "name":row[1], "email":row[2],
                     "phone":row[3], "assignment_id":row[4], "assignment_role":row[5],
                     "assignment_start":str(row[6]), "assignment_end":str(row[7]), "event_id":row[8]})
+        return response
+
+
+    @staticmethod
+    def find_events_with_unconfirmed_registrations():
+
+        stmt = text("SELECT event.id, event.type, event.date, COUNT(*) AS registrations "
+                    "FROM event "
+                    "INNER JOIN assignment ON event.id = assignment.event_id "
+                    "INNER JOIN account_assignment ON account_assignment.assignment_id = assignment.id "
+                    "WHERE event.staffed = '0' "
+                    "AND event.date > CURRENT_DATE "
+                    "AND account_assignment.confirmed = '0' "
+                    "GROUP BY event.id "
+                    "HAVING registrations > 0 "
+                    "ORDER BY event.date")
+        res = db.engine.connect().execute(stmt)
+        # stmt = text("SELECT event.id, event.type, event.date, COUNT(*) AS registrations "
+        #             "FROM event, assignment, account_assignment "
+        #             "WHERE event.id = assignment.event_id "
+        #             "AND assignment.id = account_assignment.assignment_id "
+        #             "AND event.staffed = '0' "
+        #             "AND event.date > CURRENT_DATE "
+        #             "AND account_assignment.confirmed = '0' "
+        #             "ORDER BY event.date")
+        # res = db.engine.connect().execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"event_id":row[0], "event_type":row[1],
+                    "event_date":datetime.datetime.strptime(str(row[2]), "%Y-%m-%d"),
+                    "registrations":row[3]})
         return response

@@ -17,14 +17,45 @@
             <ul class="navbar-nav mr-auto">
               {% if current_user.is_authenticated and current_user.role_ok("admin")  %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('events_index') }} ">Listaa tapahtumat</a>
+                <a class="nav-link" href="{{ url_for('index') }} ">Ajankohtaista</a>
               </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Selaa tapahtumia</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('events_index') }}">Tulevat tapahtumat</a>
+                <a class="dropdown-item" href="#">Menneet tapahtumat</a>
+                <a class="dropdown-item" href="{{ url_for('events_index') }}">Kaikki tapahtumat</a>
+              </div>
+              </li
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('events_form') }} ">Lisää uusi tapahtuma</a>
               </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Hallinnoi käyttäjiä</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('list_users') }} ">Listaa käyttäjät</a>
+                <a class="dropdown-item" href="{{ url_for('newUser_admin') }}">Luo uusi käyttäjä</a>
+              </div>
+              </li
               {% elif current_user.is_authenticated and current_user.role_ok("user") %}
               <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index') }} ">Ajankohtaista</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Omat työvuorot</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('confirmed_list_user', user_id=current_user.id) }}">Vahvistetut työvuorot</a>
+                <a class="dropdown-item" href="{{ url_for('reg_list_user', user_id=current_user.id) }}">Vahvistamattomat ilmoittautumiset</a>
+                <a class="dropdown-item" href="{{ url_for('past_list_user', user_id=current_user.id) }}">Menneet työvuorot</a>
+              </div>
+              <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('events_userindex') }}">Listaa tapahtumat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('user_update', user_id=current_user.id) }} ">Muokkaa omia tietoja</a>
               </li>
               {% else %}
               <li class="nav-item">
@@ -45,7 +76,18 @@
         </nav>
         <main role="main" class="container">
 
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+          {% endwith %}
+
 	      {% block body %}
+
 	      <p>
 	        Content.
       	</p>

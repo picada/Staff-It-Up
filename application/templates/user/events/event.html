@@ -2,9 +2,9 @@
 
 {% block body %}
 
-<h2>{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</h2>
+<h3>{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</h3><br>
 
-  <table>
+  <table class="table" style="width:50%;">
     <tr>
       <td>Nimi / Tyyppi: </td>
       <td>{{ event.type }}</td>
@@ -34,7 +34,7 @@
 
   <h4>Tapahtumaan liittyvät työtehtävät</h4>
 
-  <table>
+  <table class="table" style="width:auto;">
     <tr>
       <th>Rooli</th>
       <th>Alkaa</th>

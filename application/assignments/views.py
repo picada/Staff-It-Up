@@ -101,12 +101,17 @@ def reg_confirm_or_cancel(account_id, assignment_id, event_id):
 
     return redirect(url_for("registrations_list", event_id=event_id))
 
-@app.route("/user/assignments", methods=["GET"])
+@app.route("/user/assignments/unconfirmed", methods=["GET"])
 @login_required(role="user")
 def reg_list_user():
-        return render_template("user/assignments/unconfirmed_list.html", assignments=Assignment.find_unconfirmed_registrations_for_coming_events(user_id=current_user.id))
+        return render_template("user/assignments/list.html", unconfirmed_assignments=Assignment.find_unconfirmed_registrations_for_coming_events(user_id=current_user.id))
 
 @app.route("/user/assignments/confirmed", methods=["GET"])
 @login_required(role="user")
 def confirmed_list_user():
-        return render_template("user/assignments/confirmed_list.html", assignments=Assignment.find_confirmed_registrations_for_coming_events(user_id=current_user.id))
+        return render_template("user/assignments/list.html", upcoming_shifts=Assignment.find_confirmed_registrations_for_coming_events(user_id=current_user.id))
+
+@app.route("/user/assignments/past", methods=["GET"])
+@login_required(role="user")
+def past_list_user():
+        return render_template("user/assignments/list.html", past_shifts=Assignment.find_confirmed_registrations_for_past_events(user_id=current_user.id))

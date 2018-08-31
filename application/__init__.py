@@ -39,9 +39,6 @@ def login_required(role="ANY"):
             if role != "ANY":
                 unauthorized = True
 
-                if role == "admin":
-                    login_manager.login_view = "admin_login"
-
                 for user_role in current_user.roles:
                     if user_role.name == role:
                         unauthorized = False
@@ -80,5 +77,21 @@ from application.assignments import views
 
 try:
     db.create_all()
+
+    from application.auth.models import Role
+
+    role = Role.query.filter_by(name="admin").first()
+
+    if not role:
+        db.session.add(Role("admin"))
+        db.session().commit()
+
+    role = Role.query.filter_by(name="user").first()
+
+    if not role:
+        role = Role("admin")
+        db.session.add(Role("user"))
+        db.session().commit()
+
 except:
     pass

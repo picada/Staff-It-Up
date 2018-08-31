@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h4>Päivitä käyttäjätiedot</h4><br>
+
+{{ error }}
+<form method="POST" action="{{ url_for('user_update', user_id=user.id) }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+      <td>
+	      <ul>
+	        {% for error in form.name.errors %}
+	        <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+	    </td>
+    </tr>
+    <tr>
+      <td>
+        Käyttäjätunnus
+      </td>
+      <td>
+        {{ user.username }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.email.label }}
+      </td>
+      <td>
+        {{ form.email }}
+      </td>
+      <td>
+	      <ul>
+	        {% for error in form.email.errors %}
+	        <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+	    </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.phone.label }}
+      </td>
+      <td>
+        {{ form.phone }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.phone.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+     <td colspan="2">
+       <input type="submit" value="Päivitä tiedot"/>
+      </td>
+    </tr>
+   </table>
+</form>
+<br><br>
+
+<h5>Päivitä salasana</h5><br>
+
+<form method="POST" action="{{ url_for('password_update', user_id=user.id) }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.currentpassword.label }}
+      </td>
+      <td>
+        {{ form.currentpassword }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.currentpassword.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.newpassword.label }}
+      </td>
+      <td>
+        {{ form.newpassword }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.newpassword.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.confirm.label }}
+      </td>
+      <td>
+        {{ form.confirm }}
+      </td>
+    </tr>
+    <tr>
+     <td colspan="2">
+       <input type="submit" value="Päivitä salasana"/>
+      </td>
+    </tr>
+   </table>
+</form>
+
+
+{% endblock %}

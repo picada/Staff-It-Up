@@ -3,31 +3,52 @@
 {% block body %}
 
 {% if current_user.is_authenticated and current_user.role_ok("admin")  %}
+<h4>Ajankohtaista</h4><br>
 {% if needs_staff is defined and needs_staff %}
-<h5>Tervetuloa!</h5>
 <p>
-  Seuraaviin tuleviin tapahtumiin tarvitaan lisää työntekijöitä:
+  <strong>Seuraaviin tuleviin tapahtumiin tarvitaan lisää työntekijöitä:</strong>
 </p>
 
 <ul>
   {% for event in needs_staff %}
   <li>
     <a href="{{ url_for('event_details', event_id=event.id) }}">{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</a>
+    {% if not event.assignments %}
+    - tapahtumaan ei ole lisätty yhtään työtehtävää
+    {% endif %}
   </li>
   {% endfor %}
 </ul>
 {% else %}
 <p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
 {% endif %}
-{% elif current_user.is_authenticated and current_user.role_ok("user") %}
-{% if needs_staff is defined and needs_staff %}
-<h5>Tervetuloa!</h5>
-<a href="{{ url_for('reg_list_user') }}">Tarkastele vahvistamattomia ilmoittautumisia</a><br>
-<a href="{{ url_for('confirmed_list_user') }}">Tarkastele vahvisettuja työvuoroja</a>
+
+<br><br>
+{% if has_registrations is defined and has_registrations %}
 <p>
-  Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:
+  <strong>Seuraaviin tuleviin tapahtumiin on vahvistamattomia ilmoittautumisia:</strong>
 </p>
 
+<ul>
+  {% for event in has_registrations %}
+  <li>
+    <a href="{{ url_for('event_details', event_id=event.event_id) }}">{{ event.event_type }} {{ event.event_date.strftime("%d.%m.%Y") }}</a>
+    / {{ event.registrations }} vahvistamatonta ilmoittautumista
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Tällä hetkellä järjestelmässä ei ole yhtään vahvistamatonta ilmoittautumista.</p>
+{% endif %}
+
+{% elif current_user.is_authenticated and current_user.role_ok("user") %}
+<h4>Ajankohtaista</h4><br>
+
+<p>
+  <strong>Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:</strong>
+</p>
+
+{% if needs_staff is defined and needs_staff %}
 <ul>
   {% for event in needs_staff %}
   {% if event.assignments %}
@@ -37,9 +58,27 @@
   {% endif %}
   {% endfor %}
 </ul>
+
 {% else %}
 <p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
 {% endif %}
+
+<p>
+  <strong>Seuraavat vahvistetut työvuorot:</strong><br>
+</p>
+
+{% if next_five_shifts is defined and next_five_shifts %}
+<ul>
+  {% for shift in next_five_shifts %}
+  <li>
+    <a href="{{ url_for('event_details_user', event_id=shift.event_id) }}">{{ shift.event_type }} {{ shift.event_date.strftime("%d.%m.%Y") }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+Sinulla ei tällä hetkellä ole yhtään vahvistettua työvuoroa.
+{% endif %}
+
 {% else %}
 <h5>Kirjaudu sisään</h5><br>
 

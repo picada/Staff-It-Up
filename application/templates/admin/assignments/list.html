@@ -4,13 +4,13 @@
 
 <a href="{{url_for('event_details', event_id=event.id)}}">Siirry tapahtuman tietoihin</a><br><br>
 
-<h3>{{event.type}} {{event.date.strftime("%d.%m.%Y")}} - Vahvisetut työvuorot ja avoimet ilmoittautumiset</h3>
+<h3>{{event.type}} {{event.date.strftime("%d.%m.%Y")}} - Vahvistetut työvuorot ja avoimet ilmoittautumiset</h3>
 <br>
 
-<h4>Vahvistetut työvuorot</h4><br>
+<h4><u>Vahvistetut työvuorot</u></h4><br>
 
 {% if event.find_confirmed_registrations(event.id) %}
-<table>
+<table class="table" style="width:auto;">
   <tr>
     <th>Nimi</th>
     <th>Tehtävä</th>
@@ -33,17 +33,17 @@
   </tr>
 {% endfor %}
 {% else %}
-Tapahtumaan ei tällä hetkellä ole yhtään vahvistettua ilmoittautumista.<br><br>
+Tapahtumaan ei tällä hetkellä ole yhtään vahvistettua työvuoroa.<br><br>
 {% endif %}
 </table>
 <br><br>
 
-<h4>Vahvistamattomat ilmoittautumiset</h4><br>
+<h4><u>Vahvistamattomat ilmoittautumiset</u></h4><br>
 
 {% for assignment in assignments%}
 <h5>{{assignment.role}} klo {{ assignment.starttime.strftime("%H:%M") }} - {{ assignment.endtime.strftime("%H:%M") }}</h5><br>
 {% if assignment.find_unconfirmed_registrations(assignment.id) %}
-<table>
+<table class="table" style="width:auto;">
   <tr>
     <th>Nimi</th>
     <th>Ilmoittautumisaika</th>
