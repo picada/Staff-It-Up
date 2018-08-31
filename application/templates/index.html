@@ -6,7 +6,7 @@
 <h4>Ajankohtaista</h4><br>
 {% if needs_staff is defined and needs_staff %}
 <p>
-  <strong>Seuraaviin tuleviin tapahtumiin tarvitaan lisää työntekijöitä:</strong>
+  <strong>Seuraaviin kuukauden sisällä toteutuviin tapahtumiin tarvitaan lisää työntekijöitä:</strong>
 </p>
 
 <ul>
@@ -20,7 +20,7 @@
   {% endfor %}
 </ul>
 {% else %}
-<p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
+<p>Tällä hetkellä järjestelmässä ei ole yhtään kuukauden sisällä toteutuvaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
 {% endif %}
 
 <br><br>
@@ -44,11 +44,10 @@
 {% elif current_user.is_authenticated and current_user.role_ok("user") %}
 <h4>Ajankohtaista</h4><br>
 
+{% if needs_staff is defined and needs_staff and has_assignments==False %}
 <p>
-  <strong>Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:</strong>
+  <strong>Seuraavissa kuukauden sisään toteutuvissa tapahtumissa on vapaita työvuoroja:</strong>
 </p>
-
-{% if needs_staff is defined and needs_staff %}
 <ul>
   {% for event in needs_staff %}
   {% if event.assignments %}
@@ -58,22 +57,37 @@
   {% endif %}
   {% endfor %}
 </ul>
-
 {% else %}
-<p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
+<p>Tällä hetkellä järjestelmässä ei ole yhtään kuukauden sisällä toteutuvaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>
 {% endif %}
 
 <p>
-  <strong>Seuraavat vahvistetut työvuorot:</strong><br>
+  <strong>Seuraavat vahvistetut työvuorot (näytetään maksimissaan 5 vuoroa):</strong><br>
 </p>
 
 {% if next_five_shifts is defined and next_five_shifts %}
-<ul>
+
+<table class="table" style="width:auto;">
+  <tr>
+    <th>Pvm</b>
+    <th>Tapahtuma</th>
+    <th>Työtehtävä</th>
+  </tr>
   {% for shift in next_five_shifts %}
-  <li>
-    <a href="{{ url_for('event_details_user', event_id=shift.event_id) }}">{{ shift.event_type }} {{ shift.event_date.strftime("%d.%m.%Y") }}</a>
-  </li>
+  <tr>
+    <td>
+      {{ shift.event_date.strftime("%d.%m.%Y")}}
+    </td>
+    <td>
+      <a href="{{url_for('event_details_user', event_id=shift.event_id)}}">
+      {{shift.event_type}}</a>
+    </td>
+    <td>
+      {{shift.role}} klo {{ shift.start[:5] }} - {{ shift.end[:5] }}
+    </td>
+  </tr>
   {% endfor %}
+</table>
 </ul>
 {% else %}
 Sinulla ei tällä hetkellä ole yhtään vahvistettua työvuoroa.

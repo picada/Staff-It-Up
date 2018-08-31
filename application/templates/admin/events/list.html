@@ -13,17 +13,17 @@
 {% block body %}
   <table class="table">
     <tr>
-      <th>Tapahtuma</th>
       <th>Pvm</th>
+      <th>Tapahtuma</th>
       <th>Täynnä</th>
     </tr>
     {% if events is defined and events %}
     {% for event in events %}
     <tr>
+      <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
       <td>
         <a href="{{ url_for('event_details', event_id=event.id) }}">{{ event.type }}</a>
       </td>
-      <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
       {% if event.staffed == False %}
       <td>Ei</td>
       {% else %}

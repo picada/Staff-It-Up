@@ -15,7 +15,7 @@ def index():
         upcoming_shifts=[]
 
     return render_template("index.html",
-            needs_staff=Event.find_unstaffed_upcoming_events(),
+            needs_staff=Event.find_unstaffed_events_one_month(),
             form = LoginForm(),
             has_registrations=Event.find_events_with_unconfirmed_registrations(),
             next_five_shifts=upcoming_shifts)

@@ -2,20 +2,28 @@
 
 {% block body %}
 
-{% if needs_staff is defined and needs_staff %}
-<p>
-  Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:
-</p>
+{% if needs_staff is defined and needs_staff and has_assignments==False %}
 
-<ul>
-  {% for event in needs_staff %}
-  {% if event.assignments %}
-  <li>
-    <a href="{{ url_for('event_details_user', event_id=event.id) }}">{{ event.type }} {{ event.date.strftime("%d.%m.%Y") }}</a>
-  </li>
-  {% endif %}
-  {% endfor %}
-</ul>
+  <h4>Seuraavissa tulevissa tapahtumissa on vapaita työvuoroja:</h4>
+
+  <table class="table", style="width:auto;">
+    <tr>
+      <th>Pvm</th>
+      <th>Tapahtuma</th>
+      <th>Täynnä</th>
+    </tr>
+    {% for event in needs_staff %}
+    <tr>
+      <td>{{ event.date.strftime("%d.%m.%Y") }}</td>
+      <td>
+        <a href="{{ url_for('event_details_user', event_id=event.id) }}">{{ event.type }}</a>
+      </td>
+    </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
 {% else %}
 
 <p>Tällä hetkellä järjestelmässä ei ole yhtään tulevaa tapahtumaa, joilta puuttuu henkilökuntaa.</p>

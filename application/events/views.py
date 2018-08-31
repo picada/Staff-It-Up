@@ -9,23 +9,19 @@ from application.assignments.models import Assignment
 from application.assignments.models import AssignmentRegistration
 import datetime
 
-@app.route("/admin/events/needs_staff", methods=["GET"])
+@app.route("/admin/events/<page>", methods=["GET"])
 @login_required(role="admin")
-def events_index():
-    events=Event.find_unstaffed_upcoming_events()
-    return render_template("admin/events/list.html", events=events, page="needs_staff")
-
-@app.route("/admin/events/upcoming", methods=["GET"])
-@login_required(role="admin")
-def events_upcoming():
-    events=Event.query.filter(Event.date > db.func.current_date()).order_by(Event.date).all()
-    return render_template("admin/events/list.html", events=events, page="upcoming")
-
-@app.route("/admin/events/past", methods=["GET"])
-@login_required(role="admin")
-def events_past():
-    events=Event.query.filter(Event.date < db.func.current_date()).order_by(Event.date.desc()).all()
-    return render_template("admin/events/list.html", events=events, page="past")
+def events_index(page):
+    if page=="needs_staff":
+        events=Event.find_unstaffed_upcoming_events()
+        has_assignments = True
+        if Event.has_assignments(events):
+            has_assignments = False
+    if page=="upcoming":
+        events=Event.query.filter(Event.date > db.func.current_date()).order_by(Event.date).all()
+    if page=="past":
+        events=Event.query.filter(Event.date < db.func.current_date()).order_by(Event.date.desc()).all()
+    return render_template("admin/events/list.html", events = events, page=page, has_assignments=has_assignments)
 
 @app.route("/user/events", methods=["GET"])
 @login_required(role="user")
@@ -53,11 +49,7 @@ def events_set_staffed(event_id, page):
     if page == "event":
         return redirect(url_for("event_details", event_id=event_id))
 
-    if page=="upcoming":
-        return redirect(url_for("events_upcoming"))
-    if page=="past":
-        return redirect(url_for("events_past"))
-    return redirect(url_for("events_index"))
+    return redirect(url_for("events_index", page=page))
 
 @app.route("/admin/events/<event_id>/details", methods=["GET"])
 @login_required(role="admin")
@@ -72,7 +64,7 @@ def event_details_user(event_id):
     return render_template("user/events/event.html", event=event, assignments=event.assignments)
 
 
-@app.route("/admin/events/delete/<event_id>/", methods=["POST"])
+@app.route("/admin/events/delete/<event_id>/<page>", methods=["POST"])
 @login_required(role="admin")
 def events_delete(event_id, page):
 
@@ -87,12 +79,7 @@ def events_delete(event_id, page):
     db.session.delete(e);
     db.session().commit()
 
-    if page=="upcoming":
-        return redirect(url_for("events_upcoming"))
-    if page=="past":
-        return redirect(url_for("events_past"))
-    return redirect(url_for("events_index"))
-
+    return redirect(url_for("events_index", page=page))
 
 @app.route("/admin/events/", methods=["POST"])
 @login_required(role="admin")
