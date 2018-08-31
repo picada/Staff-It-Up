@@ -55,5 +55,5 @@ SELECT assignment.role, assignment.starttime, assignment.endtime, event.type, ev
                     AND event.date > CURRENT_DATE 
                     AND account_assignment.confirmed = '1' 
                     ORDER BY event.date;
-  
+  ```
 * muokata tarvittaessa omia yhteystietojani, jotta työnantaja saa minuun tarvittaessa yhteyttä - toteutettu
