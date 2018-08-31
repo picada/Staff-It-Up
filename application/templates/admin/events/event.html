@@ -39,6 +39,9 @@
   </form><br>
   <form method="GET" action="{{ url_for('events_update', event_id=event.id) }}">
     <input type="submit" value="Muokkaa tapahtuman tietoja"/>
+  </form><br>
+  <form method="GET" action="{{ url_for('registrations_list', event_id=event.id) }}">
+    <input type="submit" value="Tarkastele ja hallinnoi ilmoittautumisia"/>
   </form>
   <br><br>
 
@@ -66,15 +69,13 @@
     {% endfor %}
   </table><br>
 
-  <a href="{{ url_for('registrations_list', event_id=event.id) }}">Tarkastele ja hallinnoi ilmoittautumisia</a>
-
   {% else %}<br>
   <p>Tapahtumaan ei ole lisätty vielä yhtään työtehtävää.</p>
 
   {% endif %}
   <br>
 
-  <br><br>
+  <br>
   <h4>Lisää uusi työtehtävä</h4>
 
   <form method="POST" action="{{ url_for('assignment_create', event_id=event.id) }}">
