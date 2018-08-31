@@ -63,7 +63,7 @@
     {% if current_user.role_ok("admin") %}
     <tr>
       <td>
-      {% if current.role_ok("admin") %}
+      {% if current_user.role_ok("admin") %}
         Muuta työntekijäkäyttäjäksi
       {% else %}
         Lisää ylläpitäjäoikeudet

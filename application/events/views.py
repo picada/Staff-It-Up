@@ -95,3 +95,29 @@ def events_create():
     db.session().commit()
 
     return redirect(url_for("events_index"))
+
+@app.route("/admin/update/event/<event_id>/", methods=["GET", "POST"])
+@login_required("admin")
+def events_update(event_id):
+
+    event = Event.query.get(event_id)
+
+    if request.method == "GET":
+        form = EventForm(obj=event)
+        return render_template("admin/events/update.html", form=form, event=event)
+
+    event = Event.query.get(event_id)
+
+    form = EventForm(request.form)
+
+    if not form.validate():
+        return render_template("admin/events/update.html", form=form, event=event)
+
+    event.type = form.type.data
+    event.date = datetime.datetime.strptime(str(form.date.data), "%Y-%m-%d")
+    event.pax = form.pax.data
+    event.info = form.info.data
+
+    db.session().commit()
+    flash('Tapahtuman tietojen päivittäminen onnistui')
+    return redirect(url_for("event_details", event_id=event_id))

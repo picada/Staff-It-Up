@@ -36,6 +36,9 @@
     {% else %}
     <input type="submit" value="Avaa hakuun"/>
     {% endif %}
+  </form><br>
+  <form method="GET" action="{{ url_for('events_update', event_id=event.id) }}">
+    <input type="submit" value="Muokkaa tapahtuman tietoja"/>
   </form>
   <br><br>
 
