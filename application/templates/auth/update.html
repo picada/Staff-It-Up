@@ -60,6 +60,20 @@
         </ul>
       </td>
     </tr>
+    {% if current_user.role_ok("admin") %}
+    <tr>
+      <td>
+      {% if current.role_ok("admin") %}
+        Muuta työntekijäkäyttäjäksi
+      {% else %}
+        Lisää ylläpitäjäoikeudet
+      {% endif %}
+      </td>
+      <td>
+        {{ form.admin }}
+      </td>
+    </tr>
+    {% endif %}
     <tr>
      <td colspan="2">
        <input type="submit" value="Päivitä tiedot"/>
