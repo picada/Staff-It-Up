@@ -54,7 +54,7 @@ class Event(db.Model):
     @staticmethod
     def find_events_with_unconfirmed_registrations():
 
-        stmt = text("SELECT event.id, event.type, event.date, COUNT(*) AS registrations "
+        stmt = text("SELECT event.id, event.type, event.date, COUNT(*) "
                     "FROM event "
                     "INNER JOIN assignment ON event.id = assignment.event_id "
                     "INNER JOIN account_assignment ON account_assignment.assignment_id = assignment.id "
@@ -62,18 +62,10 @@ class Event(db.Model):
                     "AND event.date > CURRENT_DATE "
                     "AND account_assignment.confirmed = '0' "
                     "GROUP BY event.id "
-                    "HAVING registrations > 0 "
+                    "HAVING COUNT(*) > 0 "
                     "ORDER BY event.date")
         res = db.engine.connect().execute(stmt)
-        # stmt = text("SELECT event.id, event.type, event.date, COUNT(*) AS registrations "
-        #             "FROM event, assignment, account_assignment "
-        #             "WHERE event.id = assignment.event_id "
-        #             "AND assignment.id = account_assignment.assignment_id "
-        #             "AND event.staffed = '0' "
-        #             "AND event.date > CURRENT_DATE "
-        #             "AND account_assignment.confirmed = '0' "
-        #             "ORDER BY event.date")
-        # res = db.engine.connect().execute(stmt)
+
 
         response = []
         for row in res:
