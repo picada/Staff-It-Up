@@ -12,9 +12,9 @@ import datetime
 @app.route("/admin/events/<page>", methods=["GET"])
 @login_required(role="admin")
 def events_index(page):
+    has_assignments = True
     if page=="needs_staff":
         events=Event.find_unstaffed_upcoming_events()
-        has_assignments = True
         if Event.has_assignments(events):
             has_assignments = False
     if page=="upcoming":
@@ -26,7 +26,6 @@ def events_index(page):
 @app.route("/user/events", methods=["GET"])
 @login_required(role="user")
 def events_userindex():
-    events = Event.query.all()
     return render_template("user/events/list.html", needs_staff=Event.find_unstaffed_upcoming_events())
 
 @app.route("/admin/events/new/")

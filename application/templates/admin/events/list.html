@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
 
+{% block body %}
 {% if page=="needs_staff" %}
-<h3>Tapahtumat, joita ei ole merkitty täydeksi<h3>
+<h4>Tapahtumat, joita ei ole merkitty täydeksi</h4>
 {% endif %}
 {% if page=="upcoming" %}
-<h3>Kaikki tulevat tapahtumat<h3>
+<h4>Kaikki tulevat tapahtumat</h4>
 {% endif %}
 {% if page=="past" %}
-<h3>Kaikki menneet tapahtumat<h3>
+<h4>Kaikki menneet tapahtumat</h4>
 {% endif %}
-
-{% block body %}
   <table class="table">
     <tr>
       <th>Pvm</th>
