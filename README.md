@@ -59,7 +59,7 @@ Salasana: testtest
 
 Käyttäjätunnus: admin
 
-Salasana: admina
+Salasana: admin
 
 ### Puutteet / rajoitukset
 
