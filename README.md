@@ -12,6 +12,8 @@ Tietokantasovellus-kurssin harjoitustyönä toteutettava sovellus.
 
 [Käyttöohje](https://github.com/picada/Staff-It-Up/blob/master/documentation/manual.md)
 
+[SQL CREATE TABLE -lauseet](https://github.com/picada/Staff-It-Up/blob/master/documentation/SQL%20CREATE%20TABLE%20statements.md)
+
 ## Kuvaus
 
 Kyseessä on Tietokantasovellus-kurssin harjoitustyönä toteutettu keikkatyöalusta tapahtumatoimistolle. Sovelluksessa on eri käyttäjärooleja (alussa ylläpitäjä eli yrityksen työvuoroista vastaava henkilö sekä peruskäyttäjä eli työntekijä). Sekä toiminnallisuudet että sovellusnäkymä riippuvat käyttäjäroolista, ja ylläpitäjällä on laajemmat oikeudet tietokannan hallintaan.
