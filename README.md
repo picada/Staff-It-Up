@@ -57,9 +57,10 @@ Salasana: testtest
 
 #### Ylläpitäjätunnus:
 
-Käyttäjätunnus: admin
+Käyttäjätunnus: admin 
 
-Salasana: admin
+Salasana: admin 
+(huom., ollut paikallisesti suoritettavan version tietokannassa jossain vaiheessa myös admina, joten salasana riippuu siitä, milloin projekti on kopioitu omalle koneelle)
 
 ### Puutteet / rajoitukset
 
