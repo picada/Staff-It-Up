@@ -28,7 +28,7 @@
 {% elif upcoming_shifts is defined %}
 <p>Sinulla ei ole tällä hetkellä yhtään vahvistettua tulevaa työvuoroa.</p>
 
-{elif unconfirmed_assignments is defined and unconfirmed_assignments %}
+{% elif unconfirmed_assignments is defined and unconfirmed_assignments %}
 <h5>Vahvistamattomat ilmoittautumiset</h5><br>
 
 <table class="table" style="width:auto;">
